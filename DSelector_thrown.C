@@ -1,8 +1,8 @@
 #include "DSelector_thrown.h"
 #include "TRandom.h"
 string polarization="degALL";
-string tag="_b1vps_as_4g_gen";
-//string tag="_flat_gen_2018_1";
+//string tag="_b1vps_as_4g_gen";
+string tag="_flat_gen_2018_1";
 //string tag="_flat_gen_2018_8_tslope1";
 //string tag="_a0a2_posRefD0D2_negRefD1_posM_gen";
 //string tag="_nonres_eff_test_d1_gen";
@@ -20,11 +20,11 @@ void DSelector_thrown::Init(TTree *locTree)
 	dOutputFileName = ""; //"" for none
         dOutputTreeFileNameMap["selected"] = "selected_"+polarization+tag+"_trees_DSelector.root"; //key is user-defined, value is output file name
 	//USERS: SET OUTPUT TREE FILES/NAMES //e.g. binning into separate files for AmpTools
-        //dOutputTreeFileNameMap["deg000"] = "deg000"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
-        //dOutputTreeFileNameMap["deg045"] = "deg045"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
-        //dOutputTreeFileNameMap["deg090"] = "deg090"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
-        //dOutputTreeFileNameMap["deg135"] = "deg135"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
-        //dOutputTreeFileNameMap["degAMO"] = "degAMO"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+//        dOutputTreeFileNameMap["deg000"] = "deg000"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+//        dOutputTreeFileNameMap["deg045"] = "deg045"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+//        dOutputTreeFileNameMap["deg090"] = "deg090"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+//        dOutputTreeFileNameMap["deg135"] = "deg135"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+//        dOutputTreeFileNameMap["degAMO"] = "degAMO"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
 
 	//dOutputTreeFileNameMap["selected_tLT06"] = "thrownNotAmptoolsReady_a0a2_tLT06.root"; //key is user-defined, value is output file name
 	//dOutputTreeFileNameMap["selected_tGT05LT1"] = "thrownNotAmptoolsReady_a0a2_tGT05LT1.root"; //key is user-defined, value is output file name
@@ -105,19 +105,20 @@ void DSelector_thrown::Init(TTree *locTree)
 	ievent=0;
 	maxevent=100;
 
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("mandelstam_tp"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("mandelstam_t"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Int_t>("BeamAngle"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("mandelstam_tp"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("mandelstam_t"); //fundamental = char, int, float, double, etc.
         dTreeInterface->Create_Branch_Fundamental<Bool_t>("ptLT03"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("mandelstam_teta"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("mandelstam_tpi0"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("Mpi0eta"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("cosTheta_eta_gj"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("phi_eta_gj"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("cosTheta_eta_hel"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("phi_eta_hel"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("Ebeam"); //fundamental = char, int, float, double, etc.
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("Metap");
-        dTreeInterface->Create_Branch_Fundamental<Double_t>("Mpi0p");
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("mandelstam_teta"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("mandelstam_tpi0"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("Mpi0eta"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("cosTheta_eta_gj"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("phi_eta_gj"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("cosTheta_eta_hel"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("phi_eta_hel"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("Ebeam"); //fundamental = char, int, float, double, etc.
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("Metap");
+        dTreeInterface->Create_Branch_Fundamental<Float_t>("Mpi0p");
         dTreeInterface->Create_Branch_NoSplitTObject<TLorentzVector>("p_p4_kin");
         dTreeInterface->Create_Branch_NoSplitTObject<TLorentzVector>("beam_p4_kin");
         dTreeInterface->Create_Branch_NoSplitTObject<TLorentzVector>("g1_p4_kin");
@@ -503,19 +504,20 @@ Bool_t DSelector_thrown::Process(Long64_t locEntry)
 	        		dHist_prodPlanePS_AMO->Fill(prodPlanePhi);
 	        	}
                         cout << "   Filling histograms" << endl;
-                        dTreeInterface->Fill_Fundamental<Double_t>("mandelstam_tp", mandelstam_tp); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("mandelstam_t", mandelstam_t); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Int_t>("BeamAngle", locPolarizationAngle); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("mandelstam_tp", mandelstam_tp); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("mandelstam_t", mandelstam_t); //fundamental = char, int, float, double, etc.
                         dTreeInterface->Fill_Fundamental<Bool_t>("ptLT03", ptLT03); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("mandelstam_teta", mandelstam_teta); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("mandelstam_tpi0", mandelstam_tpi0); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("cosTheta_eta_gj",cosTheta_eta_GJ); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("phi_eta_gj",phi_eta_GJ); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("cosTheta_eta_hel",cosTheta_eta_hel); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("phi_eta_hel",phi_eta_hel); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("Ebeam", locBeamP4.E()); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("Mpi0eta", locPi0EtaMass); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("Mpi0p", Mpi0p); //fundamental = char, int, float, double, etc.
-                        dTreeInterface->Fill_Fundamental<Double_t>("Metap", Metap); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("mandelstam_teta", mandelstam_teta); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("mandelstam_tpi0", mandelstam_tpi0); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("cosTheta_eta_gj",cosTheta_eta_GJ); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("phi_eta_gj",phi_eta_GJ); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("cosTheta_eta_hel",cosTheta_eta_hel); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("phi_eta_hel",phi_eta_hel); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("Ebeam", locBeamP4.E()); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("Mpi0eta", locPi0EtaMass); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("Mpi0p", Mpi0p); //fundamental = char, int, float, double, etc.
+                        dTreeInterface->Fill_Fundamental<Float_t>("Metap", Metap); //fundamental = char, int, float, double, etc.
                         dTreeInterface->Fill_TObject<TLorentzVector>("p_p4_kin",p_p4_kin);
                         dTreeInterface->Fill_TObject<TLorentzVector>("beam_p4_kin",beam_p4_kin);
                         dTreeInterface->Fill_TObject<TLorentzVector>("g1_p4_kin",g1_p4_kin);

@@ -57,10 +57,11 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/etapi0_flat_8GeVp_2018_1_Mpi0eta16to3/tree_pi0eta__B4_M17_M7.root");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV_2018_8/trees/tree_pi0eta__B4_*");
         //
         //Much larger flat MC
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2017_1_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_pi0eta__B4_M17_M7_merged*");
+        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged10.root");
+        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged11.root");
 
         // Testing tslope matching to data
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope1/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
@@ -137,7 +138,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 
         // ********************** v2 base cuts - using Justin's vertex selections - looser photon theta - ******************** 
-        chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_1_baseCuts_looseChiUE_tree_DSelector.root");
+        //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_1_baseCuts_looseChiUE_tree_DSelector.root");
         // ********************** STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
         //chain->Add("./zThesisCuts/degALL_data_2017_stdProtonPhotonExclusivity_looseChi_for_thesis_tree_DSelector.root");
         // ********************** NEW BASE CUTS APPLIED ONLY LOOSE CHI UE - Think only difference is with UE cut compared with above******************** 
@@ -202,10 +203,13 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 	// should change the name below from data to reco when running over MC
 	string degAngle="degALL";
+        //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_chi13";
+        //string tag="_kmatrix_mEllipse_8288_tLT1_chi13";
+
         //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
         //string tag="_flat_2017_mEllipse_mEbeam_mt";
-        string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
-        //string tag="_data_2017_mEllipse_8288_tLT1";
+        //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
+        string tag="_flat_2018_8_mEllipse_8288_tLT1";
         //string tag="_data_2017_BA";
         //string tag="_data_2017_baseCuts_looseChiUE";
         //string tag="_data_2017_mEllipse_8288_chi13_tLT1_pipicut_omegacut";

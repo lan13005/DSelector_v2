@@ -797,7 +797,7 @@ class DSelector_ver20 : public DSelector
                 double ECuts[10] = {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1};
                 bool allGeneralCutsPassed_pi0FCAL_ECuts[10];
 		double ECutFCAL = 0.1;
-		double thetaCutMin = 2.5; double thetaCutMax1 = 10.3; double thetaCutMax2 = 11.9;
+		double thetaCutMin = 2.5; double thetaCutMax1 = 10.3; double thetaCutMax2 = 11.9;//11.5;
 		double dijCut = 12.5;
 		///////////// General ///////////////////
 		double unusedEnergyCut = 0.010;

@@ -17,7 +17,7 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 {
 	// Load DSelector library
 	gROOT->ProcessLine(".x $(ROOT_ANALYSIS_HOME)/scripts/Load_DSelector.C");
-	int proof_Nthreads = 24;
+	int proof_Nthreads = 48;
 	//int proof_Nthreads = 50;
 
 	// open ROOT files and TTree
@@ -51,7 +51,8 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope5/thrown/tree_thrown_gen_amp_*");
 
         // Much larger flat sample
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_1_400M/tree_thrown_merged0.root");
+        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_1_400M/merged/tree_thrown*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_thrown*");
         
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/a0a2_posRefD0D2_negRefD1_posM/thrown/tree*");
         
@@ -68,11 +69,11 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 	//chain->Add("/d/grid13/ln16/MC/pi0eta_flat_2.3t/hddm/tree_thrown.root");
 
         // Justin VPS
-        chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
+        //chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
         
 	string degAngle="degALL";
-        string tag="_b1vps_as_4g_gen";
-        //string tag="_flat_gen_2018_1";
+        //string tag="_b1vps_as_4g_gen";
+        string tag="_flat_gen_2018_1";
         //string tag="_flat_gen_2018_8";
         //string tag="_flat_gen_2018_8_tslope1";
         //string tag="_a0a2_posRefD0D2_negRefD1_posM_gen";

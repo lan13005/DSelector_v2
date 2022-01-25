@@ -18,8 +18,9 @@ Double_t asymmetry(Double_t *x, Double_t *par){
 	return ((par[0]+par[1])*par[2]*TMath::Cos(2*degToRad*(x[0]-par[3]))/(2+(par[0]-par[1])*par[2]*TMath::Cos(2*degToRad*(x[0]-par[3]))));
 }
 
+string weightVar="AccWeight";
 string fileType="png";
-string folder="/d/grid17/ln16/myDSelector/fitAsymmetry_trees_loosePi0EtaCut_mEllipse_v2/";
+string folder="/d/grid17/ln16/myDSelector/zDR_BA/fitAsymmetry_trees_loosePi0EtaCut_mEllipse_v2/";
 static const int nDataSets = 3;
 string dataSetTag[nDataSets] = { "2017" , "2018_1", "2018_8" };
 string dataSetTag2[nDataSets+1] = { "2017" , "2018_1", "2018_8", "total" };
@@ -146,7 +147,7 @@ void constructAndFit(
                 selected *= (selectionVariable>selection.minval)*(selectionVariable<selection.maxval);
             } 
             if(selected){
-                weight=array_variable_map[dataSetTag[iData]+"_AccWeight"][ientry];
+                weight=array_variable_map[dataSetTag[iData]+"_"+weightVar][ientry];
                 BeamAngle=array_BeamAngles_map[dataSetTag[iData]][ientry];
                 teta=array_variable_map[dataSetTag[iData]+"_mandelstam_teta"][ientry];
                 tpi0=array_variable_map[dataSetTag[iData]+"_mandelstam_tpi0"][ientry];
@@ -523,6 +524,7 @@ void fitAsymmetryPlots(){
     float mandelstam_tpi0;
     float Mpi0eta;
     float AccWeight;
+    float weightASBS;
     int BeamAngle;
     bool insideEllipse;
 
@@ -539,10 +541,11 @@ void fitAsymmetryPlots(){
         {"mandelstam_tpi0",&mandelstam_tpi0},
         {"Mpi0eta",&Mpi0eta},
         {"AccWeight",&AccWeight},
+        {"weightASBS",&weightASBS},
     };
 
     vector<string> variables={"phi_eta_lab","phi_pi0_lab","Mpi0","Meta","Mpi0p","Metap",
-        "mandelstam_t","mandelstam_tp","Mpi0eta","AccWeight","mandelstam_tpi0","mandelstam_teta"};
+        "mandelstam_t","mandelstam_tp","Mpi0eta","AccWeight","weightASBS","mandelstam_tpi0","mandelstam_teta"};
     map<string, vector<float>> array_variable_map;
     map<string, vector<int>> array_BeamAngles_map;
 
@@ -592,8 +595,8 @@ void fitAsymmetryPlots(){
         bool selectEta;
         for (Long64_t ientry=0; ientry<nentries; ++ientry){
             tree->GetEntry(ientry);
-            dHist_Mpi0->Fill(*variable_map["Mpi0"],*variable_map["AccWeight"]);
-            dHist_Meta->Fill(*variable_map["Meta"],*variable_map["AccWeight"]);
+            dHist_Mpi0->Fill(*variable_map["Mpi0"],*variable_map[weightVar]);
+            dHist_Meta->Fill(*variable_map["Meta"],*variable_map[weightVar]);
 
             selectPi0=(*variable_map["Mpi0"]>pi0sigL)*(*variable_map["Mpi0"]<pi0sigR);
 

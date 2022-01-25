@@ -224,7 +224,7 @@ datas=pd.concat(datas)
 edges = np.histogram(datas["Mpi0eta"],weights=datas[weightBranch],bins=100)[1]
 ax.hist(datas["Mpi0eta"],weights=datas[weightBranch],bins=edges,histtype='step',color='black',linewidth=2,label="Phase1 Data")
 ax.hist(recon["Mpi0eta"],weights=recon[weightBranch]*maximumSeparation/recon[weightBranch].sum(),bins=edges,histtype='step',
-        color='red',linewidth=2,label="Expected b1 leakage")
+        color='red',linewidth=2,label=r"Upper 3$\sigma$ limit b1 leakage")
 ax.set_xlabel(r"$M(4\gamma)$ GeV")
 ax.set_ylabel("Entries / {0:0.3f} GeV".format(edges[1]-edges[0]))
 ax.legend()

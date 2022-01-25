@@ -29,14 +29,17 @@ int protonID=0;
 
 string selectDetector="ALL";
 string polarization="degALL";
+//string tag="_b1vps_as_4g_mEllipse_8288_tLT1_chi13";
+//string tag="_kmatrix_mEllipse_8288_tLT1_chi13";
+
 //string tag="_b1_vectorps_as_etapi_BA";
 //string tag="_b1_vps_as_etapi_selectOmega_mEllipse";
 //string tag="_b1_vps_as_etapi_stdProtonPhotonExclusivity_chi13_for_thesis";
 //string tag="_flatetapi_mEllipse_8288_chi13_tpLT05_omegacut";
 //string tag="_data_2018_1_mEllipse_mMandelstam_t_mEbeam_mDelta_chi13";
 //string tag="_data_2017_BA";
-string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
-//string tag="_data_2017_mEllipse_8288_tLT1";
+//string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
+string tag="_flat_2018_8_mEllipse_8288_tLT1";
 //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
 //string tag="_nonres_eff_test_zlm_d2_matchingFlat2018_8_mEllipse";
 
@@ -3708,8 +3711,10 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
               newPhotonVector_Shower = allPhoton4Vectors_Shower[iPhoton];
               newPhotonVector_meas = allPhoton4Vectors_meas[iPhoton];
               newPhotonWrapper = allPhotonWrappers[iPhoton];
-              photonThetas[iPhoton] = newPhotonP4Vector.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT
-              photonPhis[iPhoton] = newPhotonP4Vector.Phi()*radToDeg;
+              //photonThetas[iPhoton] = newPhotonP4Vector.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
+              //photonPhis[iPhoton] = newPhotonP4Vector.Phi()*radToDeg;
+              photonThetas[iPhoton] = newPhotonVector_Shower.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
+              photonPhis[iPhoton] = newPhotonVector_Shower.Phi()*radToDeg;
               photonEnergies[iPhoton] = newPhotonP4Vector.E();
               photonXs_Kin[iPhoton] = newPhotonX4Vector.X();
               photonYs_Kin[iPhoton] = newPhotonX4Vector.Y();
@@ -4462,7 +4467,6 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         omegaCut=
             (mismatchPairMass_13<0.15)*(mismatchPairMass_24<0.15) || (mismatchPairMass_14<0.15)*(mismatchPairMass_23<0.15) ||
             (mismatchPairMass_13<0.12)*(mismatchPairMass_23<0.12) || (mismatchPairMass_14<0.12)*(mismatchPairMass_24<0.12);
-        //omegaCut=false;
 
         // General Cuts
         pUnusedEnergy = locUnusedEnergy <= unusedEnergyCut;
@@ -4492,10 +4496,14 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         pPhotonE = pPhoton1E*pPhoton2E*pPhoton3E*pPhoton4E;
 
 
-        pPhoton1Theta = (photonThetas[0]>=thetaCutMin && photonThetas[0]<=thetaCutMax1) || photonThetas[0]>=thetaCutMax2;
-        pPhoton2Theta = (photonThetas[1]>=thetaCutMin && photonThetas[1]<=thetaCutMax1) || photonThetas[1]>=thetaCutMax2;
-        pPhoton3Theta = (photonThetas[2]>=thetaCutMin && photonThetas[2]<=thetaCutMax1) || photonThetas[2]>=thetaCutMax2;
-        pPhoton4Theta = (photonThetas[3]>=thetaCutMin && photonThetas[3]<=thetaCutMax1) || photonThetas[3]>=thetaCutMax2;
+        pPhoton1Theta = (photonThetas[0]*radToDeg>=thetaCutMin && photonThetas[0]*radToDeg<=thetaCutMax1) || photonThetas[0]*radToDeg>=thetaCutMax2;
+        pPhoton2Theta = (photonThetas[1]*radToDeg>=thetaCutMin && photonThetas[1]*radToDeg<=thetaCutMax1) || photonThetas[1]*radToDeg>=thetaCutMax2;
+        pPhoton3Theta = (photonThetas[2]*radToDeg>=thetaCutMin && photonThetas[2]*radToDeg<=thetaCutMax1) || photonThetas[2]*radToDeg>=thetaCutMax2;
+        pPhoton4Theta = (photonThetas[3]*radToDeg>=thetaCutMin && photonThetas[3]*radToDeg<=thetaCutMax1) || photonThetas[3]*radToDeg>=thetaCutMax2;
+        //pPhoton1Theta = (photonThetas[0]<=thetaCutMax1) || photonThetas[0]>=thetaCutMax2;
+        //pPhoton2Theta = (photonThetas[1]<=thetaCutMax1) || photonThetas[1]>=thetaCutMax2;
+        //pPhoton3Theta = (photonThetas[2]<=thetaCutMax1) || photonThetas[2]>=thetaCutMax2;
+        //pPhoton4Theta = (photonThetas[3]<=thetaCutMax1) || photonThetas[3]>=thetaCutMax2;
         pPhotonTheta = pPhoton1Theta*pPhoton2Theta*pPhoton3Theta*pPhoton4Theta;
 
         pShowerQuality0 = showerQuality_FCAL[0] > 0.5;
@@ -4577,8 +4585,11 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         pVH = pVH_upper*pVH_lower;
 
 	// ***********************
+        // For reference here is mEllipse_pre
+        //mEllipse_pre = cata*ptpLT1*!pMPi0P14*pShowerQuality*pBeamE8GeVPlus*
+        //pUnusedEnergy*pChiSq*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton;
 	// cuts applied to all
-	//bool cata = (locBeamE > 8.2 && locBeamE < 8.8);//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
+	//bool cata = (locBeamE > 8.2 && locBeamE < 8.8)*!omegaCut;//*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
         //bool cata = !omegaCut;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
 	//bool cata = (locBeamE > 7.9 && locBeamE < 9.0)*(mandelstam_t<1)*!omegaCut;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
 	//bool cata = (locBeamE > 8.2 && locBeamE < 8.8)*!omegaCut*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
@@ -4587,8 +4598,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	// ***********************
 	// temporary cuts
         //pinsideEllipse=pinsideEllipse_loose;
-        ptpLT1 = true;  // do not select on tp
-        //ptpLT1 = (mandelstam_t>0.1)*(mandelstam_t<1.0); /// Overwriting tpLT1 to use regular mandelstam t for comparisons to Malte and Colin
+        //ptpLT1 = true;  // do not select on tp
+        ptpLT1 = (mandelstam_t>0.1)*(mandelstam_t<1.0); /// Overwriting tpLT1 to use regular mandelstam t for comparisons to Malte and Colin
         pMPi0P14=false; // do not cut out Delta
 	pShowerQuality=true;
 	pdij3pass=true;
@@ -4849,6 +4860,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         // ------ 
         mMPi0P14_VH = mMPi0P14*pVH;
         mEllipse_pre = cata*ptpLT1*!pMPi0P14*pShowerQuality*pBeamE8GeVPlus*pUnusedEnergy*pChiSq*pdij3pass*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton;
+        mEllipse_pre = pUnusedEnergy*pChiSq*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton*pPhotonE*pPhotonTheta;
         mEllipse_pre_tGT01LT03=mEllipse_pre*(mandelstam_t>0.1)*(mandelstam_t<0.3);
         mEllipse_pre_tGT03LT06=mEllipse_pre*(mandelstam_t>0.3)*(mandelstam_t<0.6);
         mEllipse_pre_tGT06LT10=mEllipse_pre*(mandelstam_t>0.6)*(mandelstam_t<1.0);
