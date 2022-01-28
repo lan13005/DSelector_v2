@@ -17,7 +17,7 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 {
 	// Load DSelector library
 	gROOT->ProcessLine(".x $(ROOT_ANALYSIS_HOME)/scripts/Load_DSelector.C");
-	int proof_Nthreads = 48;
+	int proof_Nthreads = 24;
 	//int proof_Nthreads = 50;
 
 	// open ROOT files and TTree
@@ -25,6 +25,26 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 	//Check the name of the tree in the root files
 	TString nameOfTree = "Thrown_Tree"; // pi0eta__B4_Tree is the old one
 	TChain *chain = new TChain(nameOfTree);
+
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+        // Dont delete this space since background sampels need to be in a specific place
+
+	// **********************************************************************************	
+	// ************************** ------ BACKGROUND SAMPLES ---------**************************	
+	// **********************************************************************************	
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/a2pi/tree_thrown*");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/b1/tree_thrown*");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/etap_to_etapipi/tree_thrown*");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/eta_to_3pi/tree_thrown*");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/f1_to_etapipi/tree_thrown*");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/omega_pi0g_2018_8/thrown/tree_thrown*.root");
+        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/pi0pi0/tree_thrown*");
 
 	//a0
 	//chain->Add("/d/grid15/ln16/rootFiles/pi0eta/a0_091519/tree_thrown.root");
@@ -51,7 +71,7 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope5/thrown/tree_thrown_gen_amp_*");
 
         // Much larger flat sample
-        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_1_400M/merged/tree_thrown*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_1_400M/merged/tree_thrown*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_thrown*");
         
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/a0a2_posRefD0D2_negRefD1_posM/thrown/tree*");
@@ -72,8 +92,9 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
         
 	string degAngle="degALL";
+        string tag="_bkgndSample_gen";
         //string tag="_b1vps_as_4g_gen";
-        string tag="_flat_gen_2018_1";
+        //string tag="_flat_gen_2018_1";
         //string tag="_flat_gen_2018_8";
         //string tag="_flat_gen_2018_8_tslope1";
         //string tag="_a0a2_posRefD0D2_negRefD1_posM_gen";

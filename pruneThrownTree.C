@@ -10,24 +10,17 @@
 void pruneThrownTree()
 {
    //vector<string> tags={"d2","d1","d0","p0","p1","s0"};
-   //string baseFolder="/d/grid17/ln16/myDSelector/nonres_eff_test/attempt7_matching/";
-   //vector<string> tags={"2018_8"};
-   //string baseFolder="/d/grid17/ln16/myDSelector/nonres_eff_test/attempt5_matching/";
-   //vector<string> tags={"2018_8"};
-   //string baseFolder="/d/grid17/ln16/myDSelector/nonres_eff_test/attempt7_matching/";
-   //vector<string> tags={"2018_1"};
-   //string baseFolder="/d/grid17/ln16/myDSelector/ztSlopeMatching/";
-   vector<string> tags={""};
-   string baseFolder="/d/grid17/ln16/myDSelector/";
+   //vector<string> tags={""};
+   //string baseFolder="/d/grid17/ln16/myDSelector/";
+   vector<string> tags={"a2pi","b1to5g","etap_to_etapipi","eta_to_3pi","f1_1285_to_etapipi","flat_etapi","omega_pi0g","pi0pi0"};
+   string baseFolder="/d/grid17/ln16/myDSelector/zDSelectedBkgndSamples/";
    bool includeP4=false;
    for (auto tag : tags){
         //string oldFileName="selected_degALL_nonres_eff_test_zlm_"+tag+"_matchingFlat2018_8_gen_trees_DSelector.root";
-        //string oldFileName="selected_degALL_flat_gen_"+tag+"_tslope1_trees_DSelector.root";
-        //string oldFileName="selected_deg000_flat_gen_2018_8_trees_DSelector.root";
-        //string oldFileName="selected_degALL_flat_gen_2018_1_trees_DSelector.root";
-        string oldFileName="degALL_b1vps_as_4g_gen_trees_DSelector.root";
+        //string oldFileName="degALL_b1vps_as_4g_gen_trees_DSelector.root";
+        string oldFileName="degALL_bkgndSample_gen_trees_DSelector.root";
         cout << "running over: " << baseFolder+oldFileName << endl;
-        string filename=baseFolder+oldFileName;
+        string filename=baseFolder+tag+"/"+oldFileName;
         TFile oldfile(filename.c_str());
         TTree *oldtree;
         oldfile.GetObject("Thrown_Tree", oldtree);
@@ -38,16 +31,16 @@ void pruneThrownTree()
         TLorentzVector* g4_p4_kin=0;
         TLorentzVector etaP4;
         TLorentzVector pi0P4;
-        double Mpi0eta;
-        double Mpi0p;
-        double Metap;
-        double mandelstam_t;
-        double mandelstam_tp;
-        double Ebeam;
-        double cosTheta_eta_gj;
-        double cosTheta_eta_hel;
-        double phi_eta_gj;
-        double phi_eta_hel;
+        float Mpi0eta;
+        float Mpi0p;
+        float Metap;
+        float mandelstam_t;
+        float mandelstam_tp;
+        float Ebeam;
+        float cosTheta_eta_gj;
+        float cosTheta_eta_hel;
+        float phi_eta_gj;
+        float phi_eta_hel;
         cout << "-----\nPRE\n-----" << endl;
         if (includeP4){
             oldtree->SetBranchAddress("g1_p4_kin",&g1_p4_kin);
@@ -85,7 +78,7 @@ void pruneThrownTree()
            oldtree->SetBranchStatus(activeBranchName.c_str(), 1);
         
         // Create a new file + a clone of old tree in new file
-        TFile newfile((baseFolder+"pruned_"+oldFileName).c_str(), "recreate");
+        TFile newfile((baseFolder+tag+"/pruned_"+oldFileName).c_str(), "recreate");
         auto newtree = oldtree->CloneTree();
 
         cout << "-----\nPOST\n-----" << endl;

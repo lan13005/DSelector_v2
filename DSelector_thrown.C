@@ -1,5 +1,9 @@
 #include "DSelector_thrown.h"
 #include "TRandom.h"
+
+// Set topologyString="" to not select on the topology string. Oherwise we will compare the toplogy string to and return if not equal
+string topologyString="";
+
 string polarization="degALL";
 //string tag="_b1vps_as_4g_gen";
 string tag="_flat_gen_2018_1";
@@ -194,6 +198,18 @@ Bool_t DSelector_thrown::Process(Long64_t locEntry)
 		beamEisFinite = 1;	
 	}
 	else { ++beamEinf; }	
+
+        // Checking thrown topology
+	TString locThrownTopology = Get_ThrownTopologyString();
+        if (topologyString!=""){
+            if (locThrownTopology != topologyString.c_str() ){
+                cout << "incorrect locThrownTopology = " << locThrownTopology << endl;
+                return kTRUE;
+            }
+            else {
+                cout << "correct locThrownTopology = " << locThrownTopology << endl;
+            }
+        }
 
         double cosTheta_eta_GJ; 
         double phi_eta_GJ; 

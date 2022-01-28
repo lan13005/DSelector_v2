@@ -27,8 +27,12 @@ bool outputMassShift=true;
 int itersToRun = 0;
 int protonID=0;
 
+// Set topologyString to empty string to not select on the topology string. Oherwise we will compare the toplogy string to and return if not equal
+string topologyString="";
+
 string selectDetector="ALL";
 string polarization="degALL";
+//string tag="_bkgndSample_mEllipse_8288_tLT1";
 //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_chi13";
 //string tag="_kmatrix_mEllipse_8288_tLT1_chi13";
 
@@ -39,7 +43,7 @@ string polarization="degALL";
 //string tag="_data_2018_1_mEllipse_mMandelstam_t_mEbeam_mDelta_chi13";
 //string tag="_data_2017_BA";
 //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
-string tag="_flat_2018_8_mEllipse_8288_tLT1";
+string tag="_data_2018_1_mEllipse_8288_tLT1";
 //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
 //string tag="_nonres_eff_test_zlm_d2_matchingFlat2018_8_mEllipse";
 
@@ -3145,6 +3149,15 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
 	/************************************************* PARSE THROWN TOPOLOGY ***************************************/
 	TString locThrownTopology = Get_ThrownTopologyString();
+        if (topologyString!=""){
+            if (locThrownTopology != topologyString.c_str() ){
+                cout << "incorrect locThrownTopology = " << locThrownTopology << endl;
+                return kTRUE;
+            }
+            else {
+                cout << "correct locThrownTopology = " << locThrownTopology << endl;
+            }
+        }
 	countThrownEvents->Fill(1);
 
 	 // WE HAVE TO CHECK IF THERE IS THROWN DATA FIRST. I USE THIS CONDITION TO DETERMINE IF THE TREE IS MC OR DATA
@@ -3312,7 +3325,6 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
     //dHist_numCombos->Fill(Get_NumCombos());
     for(UInt_t loc_i = 0; loc_i < Get_NumCombos(); ++loc_i)
     {
-
         if(showOutput) { cout << "\n\n\n*********************************************************\n**************************************************\n########    EventIdx, ComboIdx: " << (eventIdx) << ", " << loc_i << "    #############" << endl; }
 
 	// Fill the polarization angle MPE = multiple photons per event or for all combinations. We will do this instead of filling per event just in case there was for whatever reason a photon in a combo can be matched with a tagged photon with a different beam polarization
@@ -4495,15 +4507,10 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         pPhoton4E = photonEnergies[3] >= ECut;
         pPhotonE = pPhoton1E*pPhoton2E*pPhoton3E*pPhoton4E;
 
-
-        pPhoton1Theta = (photonThetas[0]*radToDeg>=thetaCutMin && photonThetas[0]*radToDeg<=thetaCutMax1) || photonThetas[0]*radToDeg>=thetaCutMax2;
-        pPhoton2Theta = (photonThetas[1]*radToDeg>=thetaCutMin && photonThetas[1]*radToDeg<=thetaCutMax1) || photonThetas[1]*radToDeg>=thetaCutMax2;
-        pPhoton3Theta = (photonThetas[2]*radToDeg>=thetaCutMin && photonThetas[2]*radToDeg<=thetaCutMax1) || photonThetas[2]*radToDeg>=thetaCutMax2;
-        pPhoton4Theta = (photonThetas[3]*radToDeg>=thetaCutMin && photonThetas[3]*radToDeg<=thetaCutMax1) || photonThetas[3]*radToDeg>=thetaCutMax2;
-        //pPhoton1Theta = (photonThetas[0]<=thetaCutMax1) || photonThetas[0]>=thetaCutMax2;
-        //pPhoton2Theta = (photonThetas[1]<=thetaCutMax1) || photonThetas[1]>=thetaCutMax2;
-        //pPhoton3Theta = (photonThetas[2]<=thetaCutMax1) || photonThetas[2]>=thetaCutMax2;
-        //pPhoton4Theta = (photonThetas[3]<=thetaCutMax1) || photonThetas[3]>=thetaCutMax2;
+        pPhoton1Theta = (photonThetas[0]>=thetaCutMin && photonThetas[0]<=thetaCutMax1) || photonThetas[0]>=thetaCutMax2;
+        pPhoton2Theta = (photonThetas[1]>=thetaCutMin && photonThetas[1]<=thetaCutMax1) || photonThetas[1]>=thetaCutMax2;
+        pPhoton3Theta = (photonThetas[2]>=thetaCutMin && photonThetas[2]<=thetaCutMax1) || photonThetas[2]>=thetaCutMax2;
+        pPhoton4Theta = (photonThetas[3]>=thetaCutMin && photonThetas[3]<=thetaCutMax1) || photonThetas[3]>=thetaCutMax2;
         pPhotonTheta = pPhoton1Theta*pPhoton2Theta*pPhoton3Theta*pPhoton4Theta;
 
         pShowerQuality0 = showerQuality_FCAL[0] > 0.5;
@@ -4555,7 +4562,6 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
             pVanHove = omega > 240 && omega < 300; 
         }
 
-
         ptpLT1 = mandelstam_tp<1; 
         ptpLT05 = mandelstam_tp<0.5; 
         ptGT1 = mandelstam_t>1; 
@@ -4582,19 +4588,19 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	
         bool pVH_upper = -29.61317407*atan(-0.9877663*locPi0Eta_Kin+2.77936736)+330.46008765 > omega;
         bool pVH_lower = 45.26878219*atan(-0.88242654*locPi0Eta_Kin+3.14340627)+193.59347205 < omega;
-        pVH = pVH_upper*pVH_lower;
+        pVH = pVH_upper;//*pVH_lower;
 
 	// ***********************
         // For reference here is mEllipse_pre
         //mEllipse_pre = cata*ptpLT1*!pMPi0P14*pShowerQuality*pBeamE8GeVPlus*
         //pUnusedEnergy*pChiSq*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton;
 	// cuts applied to all
-	//bool cata = (locBeamE > 8.2 && locBeamE < 8.8)*!omegaCut;//*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
+	bool cata = (locBeamE > 8.2 && locBeamE < 8.8)*!omegaCut*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
         //bool cata = !omegaCut;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
 	//bool cata = (locBeamE > 7.9 && locBeamE < 9.0)*(mandelstam_t<1)*!omegaCut;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
 	//bool cata = (locBeamE > 8.2 && locBeamE < 8.8)*!omegaCut*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
 	//bool cata = !omegaCut*pVH;//chiSq100*pMpi0etaDoubleRegge;//(mandelstam_teta<1)*pMpi0etaDoubleRegge;
-        bool cata=true;
+        //bool cata=true;
 	// ***********************
 	// temporary cuts
         //pinsideEllipse=pinsideEllipse_loose;
@@ -4860,7 +4866,6 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         // ------ 
         mMPi0P14_VH = mMPi0P14*pVH;
         mEllipse_pre = cata*ptpLT1*!pMPi0P14*pShowerQuality*pBeamE8GeVPlus*pUnusedEnergy*pChiSq*pdij3pass*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton;
-        mEllipse_pre = pUnusedEnergy*pChiSq*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton*pPhotonE*pPhotonTheta;
         mEllipse_pre_tGT01LT03=mEllipse_pre*(mandelstam_t>0.1)*(mandelstam_t<0.3);
         mEllipse_pre_tGT03LT06=mEllipse_pre*(mandelstam_t>0.3)*(mandelstam_t<0.6);
         mEllipse_pre_tGT06LT10=mEllipse_pre*(mandelstam_t>0.6)*(mandelstam_t<1.0);
@@ -4962,7 +4967,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	}
 
 	//withinBox(inBox, inBox_noOtherCuts, mEllipse_pre, locPi0Mass_Kin,locEtaMass_Kin, 0.135881-2*0.0076, 0.135881+2*0.0076, 0.548625-2*0.0191, 0.548625+2*0.0191, 0.01, 0.02);
-        withinBox(inBox, inBox_noOtherCuts, mEllipse_pre, locPi0Mass_Kin,locEtaMass_Kin, 0.135881, 0.548625, 0.0076, 0.0191, 3, 1, 2, 3, 1, 2);
+        withinBox(inBox, inBox_noOtherCuts, mEllipse_pre, locPi0Mass_Kin,locEtaMass_Kin, 
+                pi0Mean, etaMean, pi0Std, etaStd, pi0Sig, pi0Skip, pi0SB, etaSig, etaSkip, etaSB);
 	if(inBox[4]){ 
 		pi0Momentum.SetXYZM(locPi0P4_Kin.X(),locPi0P4_Kin.Y(), locPi0P4_Kin.Z(),0.135);	
 		etaMomentum.SetXYZM(locEtaP4_Kin.X(),locEtaP4_Kin.Y(), locEtaP4_Kin.Z(),0.547);	
@@ -4989,16 +4995,16 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	else { Mpi0eta_12 = locPi0Eta_Kin; } 
 
 	// USING THE RECTANGULAR SB
-	if ( inBox_noOtherCuts[10] ) { weightBS = pi0SBweight*etaSBweight; weightB = 1-weightBS;}
-	else if ( inBox_noOtherCuts[11] ) { weightBS = etaSBweight; weightB = 1-weightBS; }
-	else if ( inBox_noOtherCuts[12] ) { weightBS = pi0SBweight; weightB = 1-weightBS; }
-	else if ( inBox_noOtherCuts[4] ) { weightBS = 1; weightB = 0; }
-	else { weightBS=0; weightB=1; }
-	//if ( inBox_noOtherCuts[10] ) { weightBS = 0.25; weightB = -1.25; }
-	//else if ( inBox_noOtherCuts[11] ) { weightBS = -0.5; weightB = 1.5; }
-	//else if ( inBox_noOtherCuts[12] ) { weightBS = -0.5; weightB = 1.5; }
-	//else if ( inBox_noOtherCuts[4] ) { weightBS = 1; weightB = 0; }
-	//else { weightBS=0; weightB=1; }
+//	if ( inBox_noOtherCuts[10] ) { weightBS = pi0SBweight*etaSBweight; }
+//	else if ( inBox_noOtherCuts[11] ) { weightBS = etaSBweight;  }
+//	else if ( inBox_noOtherCuts[12] ) { weightBS = pi0SBweight;  }
+//	else if ( inBox_noOtherCuts[4] ) { weightBS = 1; }
+//	else { weightBS=0; }
+//	//if ( inBox_noOtherCuts[10] ) { weightBS = 0.25; }
+//	//else if ( inBox_noOtherCuts[11] ) { weightBS = -0.5; }
+//	//else if ( inBox_noOtherCuts[12] ) { weightBS = -0.5; }
+//	//else if ( inBox_noOtherCuts[4] ) { weightBS = 1;}
+//	//else { weightBS=0; }
 
         // Calculate weights ignoring the other dimension
         if ( locPi0Mass_Kin > pi0Mean-pi0Std*pi0Sig && locPi0Mass_Kin < pi0Mean+pi0Std*pi0Sig ) { weightBSpi0 = 1; } 
@@ -5009,6 +5015,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         else if ( locEtaMass_Kin > etaMean-etaStd*(etaSig+etaSkip+etaSB) && locEtaMass_Kin < etaMean-etaStd*(etaSig+etaSkip) ) { weightBSeta = etaSBweight; } 
         else if ( locEtaMass_Kin > etaMean+etaStd*(etaSig+etaSkip) && locEtaMass_Kin < etaMean+etaStd*(etaSig+etaSkip+etaSB) ) { weightBSeta = etaSBweight; } 
         else { weightBSeta = 0; }
+        weightBS=weightBSpi0*weightBSeta;
 
         // now that we have defined both the weights we can multiply them together
         weightAS_BS = weightAS*weightBS;
@@ -5017,8 +5024,6 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	if ( abs(weightAS_BS)>1){
 		if(showOutput)cout << "weightBS,weightAS: " << weightBS << ", " << weightAS << endl;
 	}
-	// weightB would be the conjugate of the weight such that weightB+weightBS=(1,1,1,1)
-        weightAS_B = weightAS*weightB;
 
 	++count_combos;
         if (allGeneralCutsPassed*withinCone[1]) {

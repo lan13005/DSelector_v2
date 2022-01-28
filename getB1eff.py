@@ -7,6 +7,8 @@ import os
 import ROOT
 from decimal import Decimal
 import pandas as pd
+import re
+
 
 import mplhep as hep
 mpl.rcParams.update(mpl.rcParamsDefault)
@@ -22,8 +24,8 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=17)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-
-target=1.22*10**(-9) #nanobarns
+target=1.22 # its in inverse barns units - http://hadron.physics.fsu.edu/Theses/AErnst_FSU_thesis.pdf
+BR=1*0.0834*0.988*0.988; # assumed b1->omegapi dominant=1, omega->pi0g is 8.24, 99% decay to 2g for the 2 pi0s 
 
 fig,ax=plt.subplots(2,3,figsize=(18,9))
 ax=ax.flatten()
@@ -50,7 +52,7 @@ getYields=True # should we get the array of yields
 
 rerunFlux=False # should we get the flux again
 
-outputFolder="b1_efficiency/"
+outputFolder="zB1_efficiency/"
 weightBranch="weightASBS" # "weightASBS", "AccWeight"
 os.system("mkdir -p "+outputFolder)
 
@@ -60,12 +62,12 @@ os.system("mkdir -p "+outputFolder)
 if getCS:
     print("\n\nGetting cross sections\n------------------------")
     crossSections=[1.37,1.37,1.35,1.36,1.35,1.3,1.26,1.18,1.1,1.1,1.03,1.04,1,1,0.95,0.95,0.9,0.9,0.82,0.82]
-    crossSections=np.array(crossSections)*1000 # Foda has it in microbarns
+    crossSections=np.array(crossSections)/1000000 # Foda has it in microbarns, convert to barns
     crossSectionErrs=[0.03,0.03,0.03,0.03,0.02,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]
-    crossSectionErrs=np.array(crossSectionErrs)
+    crossSectionErrs=np.array(crossSectionErrs)/1000000 # change units also
     assert((len(binedges)-1==len(crossSections)) and (len(crossSections)==len(crossSectionErrs)))
     ax[4].errorbar(bincenters,crossSections,yerr=crossSectionErrs,xerr=xerrs,fmt="ro",ecolor="black")
-    ax[4].set_ylabel("b1 Cross Section (nb)",size=16)
+    ax[4].set_ylabel("b1 Cross Section (b)",size=16)
     ax[4].set_xlabel("Beam Energy (GeV)",size=16)
     ax[4].set_ylim(bottom=0)
     ax[4].axvline(emin,c="black",linestyle="--")
@@ -125,7 +127,7 @@ if getEff:
     thrownEnergy="ThrownBeam__GeneratedEnergy"
     dataEnergy="Ebeam_thrown" # "Ebeam" if we want the reconstructed
     baseFolder="/d/grid17/ln16/myDSelector/"
-    columns=[dataEnergy,"AccWeight","weightASBS","insideEllipse","Mpi0eta"]
+    columns=[dataEnergy,"AccWeight","weightASBS","insideEllipse","Mpi0eta","Mpi0g3","Mpi0","Meta"]
     recon=rp.read_root(baseFolder+"degALL_b1vps_as_4g_mEllipse_8288_tLT1_chi13_treeFlat_DSelector.root",columns=columns)
     thrown=rp.read_root(baseFolder+"degALL_b1vps_as_4g_gen_trees_DSelector.root",columns=[thrownEnergy])
     #recon=recon[recon.insideEllipse]
@@ -187,7 +189,7 @@ if getYields:
     efferr=efficiencies_err
     energies=bincenters[binMin:includingBinMax]
     
-    expectedYields=cs*eff*fc*target
+    expectedYields=cs*eff*fc*target*BR
     expectedYieldErrs=expectedYields*np.sqrt((cserr/cs)*(cserr/cs)+(fcerr/fc)*(fcerr/fc)+(efferr/eff)*(efferr/eff))
     
     ax[5].errorbar(energies,expectedYields,yerr=expectedYieldErrs,xerr=xerrs,fmt="ro",ecolor='black')
@@ -215,30 +217,55 @@ print("\n\nPlotting final plot!\n------------------------")
 plt.tight_layout()
 plt.savefig(outputFolder+"efficiencyB1_"+weightBranch+".png")
 
-fig,ax=plt.subplots(1,1,figsize=(10,8))
+fig,axes=plt.subplots(1,2,figsize=(14,6))
 dataBaseFolder="/d/grid17/ln16/myDSelector/amptools/zPhase1_t0103061_e79828890/baseFiles_v2/"
 datas=[]
 for run in ["2017","2018_1","2018_8"]:
-    datas.append(rp.read_root(dataBaseFolder+"degALL_data_"+run+"_mEllipse_8288_tLT1_treeFlat_DSelector.root",columns=["Mpi0eta","AccWeight","weightASBS"]))
+    datas.append(rp.read_root(dataBaseFolder+"degALL_data_"+run+"_mEllipse_8288_tLT1_treeFlat_DSelector.root",columns=
+        ["Mpi0eta","Mpi0g3","AccWeight","weightASBS","Mpi0","Meta"]))
 datas=pd.concat(datas)
-edges = np.histogram(datas["Mpi0eta"],weights=datas[weightBranch],bins=100)[1]
-ax.hist(datas["Mpi0eta"],weights=datas[weightBranch],bins=edges,histtype='step',color='black',linewidth=2,label="Phase1 Data")
-ax.hist(recon["Mpi0eta"],weights=recon[weightBranch]*maximumSeparation/recon[weightBranch].sum(),bins=edges,histtype='step',
-        color='red',linewidth=2,label=r"Upper 3$\sigma$ limit b1 leakage")
-ax.set_xlabel(r"$M(4\gamma)$ GeV")
-ax.set_ylabel("Entries / {0:0.3f} GeV".format(edges[1]-edges[0]))
-ax.legend()
+
+for varx,label,ax in zip(["Mpi0eta","Mpi0g3"],[r"$M(4\gamma)$ GeV",r"$M(\pi\gamma_3)$ GeV"],axes):
+    edges = np.histogram(datas[varx],weights=datas[weightBranch],bins=100)[1]
+    ax.hist(datas[varx],weights=datas[weightBranch],bins=edges,histtype='step',color='black',linewidth=2,label="Phase1 Data")
+    ax.hist(recon[varx],weights=recon[weightBranch]*maximumSeparation/recon[weightBranch].sum(),bins=edges,histtype='step',
+            color='red',linewidth=2,label=r"Upper 3$\sigma$ limit"+"\nb1 leakage")
+    ax.set_xlabel(label)
+    ax.set_ylabel("Entries / {0:0.3f} GeV".format(edges[1]-edges[0]))
+    ax.legend()
+plt.tight_layout()
 plt.savefig(outputFolder+"expectedYield_"+weightBranch+".png")
 
 
+#### Plotting sidebands distributions comparing data to expected b1 background leakage
+def getSidebands():
+    with open("DSelector_ver20.C") as selector:
+        for line in selector:
+            if "withinBox" in line:
+                line=line.rstrip().lstrip()
+                if not line.startswith("//"):
+                    args=line.split(",")[5:]
+                    args=[float(re.sub(r'[^\d.]+', "",arg)) for arg in args]
+    pi0args=[args[0],args[2],args[4],args[5],args[6]]
+    etaargs=[args[1],args[3],args[7],args[8],args[9]]
+    return pi0args,etaargs
 
 
-
-
-
-
-
-
+pi0args,etaargs=getSidebands()
+fig,axes=plt.subplots(1,2,figsize=(14,6))
+for varx,args,label,ax in zip(["Mpi0","Meta"],[pi0args,etaargs],[r"$M(\gamma_1\gamma_2)$ GeV",r"$M(\gamma_3\gamma_4)$ GeV"],axes):
+    edges = np.histogram(datas[varx],weights=datas["AccWeight"],bins=100)[1]
+    ax.hist(datas[varx],weights=datas["AccWeight"],bins=edges,histtype='step',color='black',linewidth=2,label="Phase1 Data")
+    ax.hist(recon[varx],weights=recon["AccWeight"]*maximumSeparation/recon[weightBranch].sum(),bins=edges,histtype='step',
+            color='red',linewidth=2,label=r"Upper 3$\sigma$ limit"+"\nb1 leakage")
+    ax.axvspan(args[0]-args[2]*args[1],args[0]+args[2]*args[1],color='green',alpha=0.3)
+    ax.axvspan(args[0]-(args[2]+args[3]+args[4])*args[1],args[0]-(args[2]+args[3])*args[1],color='red',alpha=0.3)
+    ax.axvspan(args[0]+(args[2]+args[3])*args[1],args[0]+(args[2]+args[3]+args[4])*args[1],color='red',alpha=0.3)
+    ax.set_xlabel(label)
+    ax.set_ylabel("Entries / {0:0.3f} GeV".format(edges[1]-edges[0]))
+    ax.legend()
+plt.tight_layout()
+plt.savefig(outputFolder+"sidebands.png")
 
 
 

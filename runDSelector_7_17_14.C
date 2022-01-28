@@ -33,6 +33,18 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
 	TChain *chain = new TChain(nameOfTree);
+
+
+	// **********************************************************************************	
+	// ************************** ------ BACKGROUND SAMPLES ---------**************************	
+	// **********************************************************************************	
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/a2pi/tree_pi0eta*");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/b1/tree_pi0eta__B4_M17_M7_gen_amp*");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/etap_to_etapipi/tree_pi0eta*");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/eta_to_3pi/tree_pi0eta*");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/f1_to_etapipi/tree_pi0eta*");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/omega_pi0g/tree_pi0eta*.root");
+        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/pi0pi0/tree_pi0eta*");
 	
 	// **********************************************************************************	
 	// ************************** ------ PI0ETA BELOW ---------**************************	
@@ -59,9 +71,10 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
         //
         //Much larger flat MC
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_pi0eta__B4_M17_M7_merged*");
-        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged10.root");
-        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged11.root");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged10.root");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged11.root");
 
         // Testing tslope matching to data
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope1/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
@@ -138,14 +151,18 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 
         // ********************** v2 base cuts - using Justin's vertex selections - looser photon theta - ******************** 
-        //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_1_baseCuts_looseChiUE_tree_DSelector.root");
+        chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_1_baseCuts_looseChiUE_tree_DSelector.root");
         // ********************** STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
         //chain->Add("./zThesisCuts/degALL_data_2017_stdProtonPhotonExclusivity_looseChi_for_thesis_tree_DSelector.root");
+        
+        
+        // ********************** v1 base cuts ********************
         // ********************** NEW BASE CUTS APPLIED ONLY LOOSE CHI UE - Think only difference is with UE cut compared with above******************** 
         //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE/degALL_data_2017_baseCuts_looseChiUE_tree_DSelector.root");
         // ********************** NEW BASE CUTS APPLIED ONLY TIGHT CHI UE ********************
         //chain->Add("./zBaseCuts/baseCuts_with_tightChiUE/degALL_data_2017_baseCuts_tree_DSelector.root");
-        //
+        
+        
         // ********************** OLD  BASE CUTS APPLIED ONLY ********************
 	//// 2017
         //chain->Add("/d/grid15/ln16/pi0eta/092419/zSelectedBaseCuts/pi0eta_data_tree_DSelector.root");
@@ -167,6 +184,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         // vector pseudoscalar b1 simulations from justin
         //chain->Add("/d/grid17/ln16/rootFiles/vectorps_b1_justin/b1_vectorps_justin_as_etapi/tree_pi0eta__B4_M17_M7.root");
         //chain->Add("/d/grid17/ln16/b1_vps/degALL_recon_as_etapi_tree_DSelector.root");
+        //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
         
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/etapi0_zlm_/trees/*"); 
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/matchingFlat2018_8/etapi0_zlm_d2/trees/*");
@@ -203,13 +221,15 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 	// should change the name below from data to reco when running over MC
 	string degAngle="degALL";
+        //string tag="_bkgndSample_mEllipse_8288_tLT1";
+        
         //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_chi13";
         //string tag="_kmatrix_mEllipse_8288_tLT1_chi13";
 
         //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
         //string tag="_flat_2017_mEllipse_mEbeam_mt";
         //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
-        string tag="_flat_2018_8_mEllipse_8288_tLT1";
+        string tag="_data_2018_1_mEllipse_8288_tLT1";
         //string tag="_data_2017_BA";
         //string tag="_data_2017_baseCuts_looseChiUE";
         //string tag="_data_2017_mEllipse_8288_chi13_tLT1_pipicut_omegacut";
@@ -222,6 +242,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //
         //string tag="_flat_M7_2018_8_mEllipse_8288_tpLT1_chi13_omegacut_rfpeak";
         //string tag="_malte_kmatrix_2018_8_mEllipse_8288_tLT1_chi13_omegacut";//_mPhotonETheta_mDelta";
+        
 
 	//  ===== Section is for pulling in data by polarization for asymmetry ===== /////
 	// dividing allData into gorups by polarization. Actually the files we import have
