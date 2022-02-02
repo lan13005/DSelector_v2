@@ -5,8 +5,8 @@
 string topologyString="";
 
 string polarization="degALL";
-//string tag="_b1vps_as_4g_gen";
-string tag="_flat_gen_2018_1";
+string tag="_b1vps_as_4g_gen";
+//string tag="_flat_gen_2018_1";
 //string tag="_flat_gen_2018_8_tslope1";
 //string tag="_a0a2_posRefD0D2_negRefD1_posM_gen";
 //string tag="_nonres_eff_test_d1_gen";

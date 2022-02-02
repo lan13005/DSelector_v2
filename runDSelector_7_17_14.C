@@ -23,12 +23,12 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	gROOT->ProcessLine(".x $(ROOT_ANALYSIS_HOME)/scripts/Load_DSelector.C");
 	// change the directory that proof saves the data to
 	//gEnv->SetValue("ProofLite.Sandbox", "/d/grid15/ln16/.proof");
-	int proof_Nthreads = 48;
+	int proof_Nthreads = 36;
 	//int proof_Nthreads = 50;
 
 	// open ROOT files and TTree
-	TString nameOfTree = "pi0eta__B4_M17_M7_Tree"; 
-        //TString nameOfTree = "pi0eta__B4_M7_M17_Tree";
+	//TString nameOfTree = "pi0eta__B4_M17_M7_Tree"; 
+        TString nameOfTree = "pi0eta__B4_M7_M17_Tree";
         //TString nameOfTree = "pi0eta__B4_Tree";
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
@@ -39,7 +39,6 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	// ************************** ------ BACKGROUND SAMPLES ---------**************************	
 	// **********************************************************************************	
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/a2pi/tree_pi0eta*");
-        //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/b1/tree_pi0eta__B4_M17_M7_gen_amp*");
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/etap_to_etapipi/tree_pi0eta*");
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/eta_to_3pi/tree_pi0eta*");
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/f1_to_etapipi/tree_pi0eta*");
@@ -73,7 +72,6 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //Much larger flat MC
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_pi0eta__B4_M17_M7_merged*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged10.root");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged11.root");
 
         // Testing tslope matching to data
@@ -141,6 +139,8 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
         // ************* MALTE KMATRIX ********
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix/tree_pi0eta__B4_M7_M17*");
+        // Newer K-matrix 10M events probably
+        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix_10M_013022/trees/tree_pi0eta__B4_M7_M17_gen_amp_*");
 
         // *********** From mergeEvents.C, merging etapi and b1 events that prefer the 4g hypothesis
         //chain->Add("/d/grid17/ln16/mergingTrees/etapi_and_b1_as_4g.root");
@@ -151,7 +151,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 
         // ********************** v2 base cuts - using Justin's vertex selections - looser photon theta - ******************** 
-        chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_1_baseCuts_looseChiUE_tree_DSelector.root");
+        //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_8_baseCuts_looseChiUE_tree_DSelector.root");
         // ********************** STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
         //chain->Add("./zThesisCuts/degALL_data_2017_stdProtonPhotonExclusivity_looseChi_for_thesis_tree_DSelector.root");
         
@@ -182,8 +182,6 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/runAll/flat_etapi/degALL_mEllipse_8288_chi13_tpLT05_pipicut_omegacut_tree_DSelector.root");
 
         // vector pseudoscalar b1 simulations from justin
-        //chain->Add("/d/grid17/ln16/rootFiles/vectorps_b1_justin/b1_vectorps_justin_as_etapi/tree_pi0eta__B4_M17_M7.root");
-        //chain->Add("/d/grid17/ln16/b1_vps/degALL_recon_as_etapi_tree_DSelector.root");
         //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
         
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/etapi0_zlm_/trees/*"); 
@@ -223,13 +221,15 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	string degAngle="degALL";
         //string tag="_bkgndSample_mEllipse_8288_tLT1";
         
-        //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_chi13";
-        //string tag="_kmatrix_mEllipse_8288_tLT1_chi13";
+        string tag="_kmatrix_mEllipse_8288_tLT1_mVH";
 
         //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
         //string tag="_flat_2017_mEllipse_mEbeam_mt";
         //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
-        string tag="_data_2018_1_mEllipse_8288_tLT1";
+        
+        //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_mVH";
+        //string tag="_flat_2018_8_mEllipse_8288_tLT1_mVH";
+
         //string tag="_data_2017_BA";
         //string tag="_data_2017_baseCuts_looseChiUE";
         //string tag="_data_2017_mEllipse_8288_chi13_tLT1_pipicut_omegacut";

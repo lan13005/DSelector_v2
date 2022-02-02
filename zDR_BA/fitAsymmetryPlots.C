@@ -18,7 +18,21 @@ Double_t asymmetry(Double_t *x, Double_t *par){
 	return ((par[0]+par[1])*par[2]*TMath::Cos(2*degToRad*(x[0]-par[3]))/(2+(par[0]-par[1])*par[2]*TMath::Cos(2*degToRad*(x[0]-par[3]))));
 }
 
-string weightVar="AccWeight";
+// Number of t1 bins to consider, have to manually enter the names
+int nt1bins=5; 
+string mint1s[5] = {"01", "03", "05", "07", "09"};
+//int nt1bins=1;
+//string mint1s[1] = {"05"}; 
+
+// This tag will be appended to the resulting csv file and all folders, can use to denote specific studies like differences in weighting
+//string tag="_sig_AS"; // do accidentals only so we need to select on signal region also. Either through the rectangular selection of insideEllipse bool
+//string weightVar="AccWeight";
+//string tag="_ASBS"; // do accidentals and sideband subtraction 
+//string weightVar="weightASBS";
+string tag="_etaRight_ASBS"; // select left of eta peak and sideband subtract that side also
+string weightVar="weightASBS";
+
+
 string fileType="png";
 string folder="/d/grid17/ln16/myDSelector/zDR_BA/fitAsymmetry_trees_loosePi0EtaCut_mEllipse_v2/";
 static const int nDataSets = 3;
@@ -69,10 +83,6 @@ void constructAndFit(
     ofstream* saveCsv
     ){
     string phis_orientation[5] =  {"phi000", "phi045", "phi090", "phi135", "phiAMO"};
-    int nt1bins=5;
-    string mint1s[5] = {"01", "03", "05", "07", "09"};
-    //int nt1bins=1;
-    //string mint1s[1] = {"05"};
     float t1HalfWidth=1.0/nt1bins/2;
 
     gStyle->SetOptFit(111);
@@ -598,7 +608,7 @@ void fitAsymmetryPlots(){
             dHist_Mpi0->Fill(*variable_map["Mpi0"],*variable_map[weightVar]);
             dHist_Meta->Fill(*variable_map["Meta"],*variable_map[weightVar]);
 
-            selectPi0=(*variable_map["Mpi0"]>pi0sigL)*(*variable_map["Mpi0"]<pi0sigR);
+            //selectPi0=(*variable_map["Mpi0"]>pi0sigL)*(*variable_map["Mpi0"]<pi0sigR);
 
             // ******* Select Eta Sidebands
             //selectEta=(*variable_map["Meta"]>etasbLL)*(*variable_map["Meta"]<etasbLR)||(*variable_map["Meta"]>etasbRL)*(*variable_map["Meta"]<etasbRR);
@@ -607,10 +617,19 @@ void fitAsymmetryPlots(){
             // ******* Select Eta Left Sideband
             //selectEta=(*variable_map["Meta"]>etasbLL)*(*variable_map["Meta"]<etasbLR);
             // ******* Select Eta Signal
-            selectEta=(*variable_map["Meta"]>etasigL)*(*variable_map["Meta"]<etasigR);
+            //selectEta=(*variable_map["Meta"]>etasigL)*(*variable_map["Meta"]<etasigR);
+
+            // ******* Select Eta Right Half Peak
+            selectEta=(*variable_map["Meta"]>eta_peak);
+            // ******* Select Eta Left Half Peak
+            //selectEta=(*variable_map["Meta"]<eta_peak);
             
+            // Do not select on Mpi0 nor Meta if we are going to do sideband subtraction also
+            selectPi0=true; 
+            //selectEta=true;
+
             if(selectPi0*selectEta){
-            //if(insideEllipse)
+            //if(insideEllipse){
                 for(auto variable: variables){
                     array_variable_map[dataSetTag[iData]+"_"+variable].push_back(*variable_map[variable]); 
                 }
@@ -619,8 +638,6 @@ void fitAsymmetryPlots(){
         }
     }
 
-
-    string tag="_sig_AS";//"_sbR_1bin";
     //gSystem->Exec("rm -rf fitAsymmetryPlots_results");
     gSystem->Exec("mkdir -p fitAsymmetryPlots_results");
 

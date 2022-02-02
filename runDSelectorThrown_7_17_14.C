@@ -17,7 +17,7 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 {
 	// Load DSelector library
 	gROOT->ProcessLine(".x $(ROOT_ANALYSIS_HOME)/scripts/Load_DSelector.C");
-	int proof_Nthreads = 24;
+	int proof_Nthreads = 36;
 	//int proof_Nthreads = 50;
 
 	// open ROOT files and TTree
@@ -38,13 +38,13 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 	// **********************************************************************************	
 	// ************************** ------ BACKGROUND SAMPLES ---------**************************	
 	// **********************************************************************************	
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/a2pi/tree_thrown*");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/b1/tree_thrown*");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/etap_to_etapipi/tree_thrown*");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/eta_to_3pi/tree_thrown*");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/f1_to_etapipi/tree_thrown*");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/omega_pi0g_2018_8/thrown/tree_thrown*.root");
-        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/pi0pi0/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/a2pi/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/b1/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/etap_to_etapipi/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/eta_to_3pi/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/f1_to_etapipi/tree_thrown*");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/omega_pi0g_2018_8/thrown/tree_thrown*.root");
+//        chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/rootTrees/30M/pi0pi0/tree_thrown*");
 
 	//a0
 	//chain->Add("/d/grid15/ln16/rootFiles/pi0eta/a0_091519/tree_thrown.root");
@@ -89,11 +89,11 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
 	//chain->Add("/d/grid13/ln16/MC/pi0eta_flat_2.3t/hddm/tree_thrown.root");
 
         // Justin VPS
-        //chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
+        chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
         
 	string degAngle="degALL";
-        string tag="_bkgndSample_gen";
-        //string tag="_b1vps_as_4g_gen";
+        //string tag="_bkgndSample_gen";
+        string tag="_b1vps_as_4g_gen";
         //string tag="_flat_gen_2018_1";
         //string tag="_flat_gen_2018_8";
         //string tag="_flat_gen_2018_8_tslope1";

@@ -1152,6 +1152,8 @@ class DSelector_ver20 : public DSelector
 
                 // Mpi0p alternative using VH
 		bool pVH = true;
+		bool pVH_pi0p = true;
+		bool pVH_etap = true;
 		bool mMPi0P14_VH = true;
 		// mEllipseRY contains both the red and yellow regions only.
 		bool mEllipse = true;
