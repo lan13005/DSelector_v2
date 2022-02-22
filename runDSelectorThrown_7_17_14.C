@@ -67,35 +67,35 @@ void runDSelectorThrown_7_17_14(bool proof = 1, string path = "")
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/etapi0_flat_8GeVp_2018_1_Mpi0eta16to3/tree_thrown.root");
         // newer flat full Mpi0eta range
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV/thrown/tree_thrown_gen_amp_*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV_2018_8/thrown/tree_thrown_gen_amp_*");
+        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV_2018_8/thrown/tree_thrown_gen_amp_*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope5/thrown/tree_thrown_gen_amp_*");
 
         // Much larger flat sample
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_1_400M/merged/tree_thrown*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_thrown*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_thrown*");
         
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/a0a2_posRefD0D2_negRefD1_posM/thrown/tree*");
-        
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/a0a2a2pi1_polarized_largerPi1/thrown/tree_thrown_gen_amp*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/pi1_polarized/thrown/tree_thrown_gen_amp_*");
+        // Files above did not have associated thrown trees, these ones do but only 1M events
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix_1M_021322/thrown/tree_thrown_gen_amp_*");
 
 	// BA studies. Hddm filtered to make phi have some cos dependence
 	//chain->Add("/d/grid15/ln16/rootFiles/pi0eta/flat_21t_hddmFiltered_8288_1628_uniquePolar/tree_thrown.root");
 
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/etapi0_zlm_d2/thrown/tree_*"); 
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/matchingFlat2018_8/etapi0_zlm_d2/thrown/*"); 
-
+        
 	// test
 	//chain->Add("/d/grid13/ln16/MC/pi0eta_flat_2.3t/hddm/tree_thrown.root");
 
         // Justin VPS
-        chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
+        //chain->Add("/d/grid17/ln16/b1_vps/degALL_thrown_as_etapi_trees_DSelector.root");
         
 	string degAngle="degALL";
         //string tag="_bkgndSample_gen";
-        string tag="_b1vps_as_4g_gen";
+        //string tag="_kmatrix_gen";
+        //string tag="_b1vps_as_4g_gen";
         //string tag="_flat_gen_2018_1";
-        //string tag="_flat_gen_2018_8";
+        string tag="_flat_gen_2018_8_v0";
         //string tag="_flat_gen_2018_8_tslope1";
         //string tag="_a0a2_posRefD0D2_negRefD1_posM_gen";
         //string tag="_nonres_eff_test_zlm_d2_matchingFlat2018_8_gen";

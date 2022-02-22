@@ -3,7 +3,7 @@ bool NoCut=0;
 // degXXX where XXX = {000,045,090,135,All} where All is polarization independent. Actually anything other than the first 4 cases work but
 // MUST BE ATLEAST 3 CHARACTERS LONG.
 //string polarization = "a0a2a2pi1_";
-bool showOutput = false;
+bool verbose = false;
 bool showMassCalc = false;
 bool onlyNamesPi0_1 = true; // true if we want to show only the histograms with _1 in their names so we can merge them with _2
 
@@ -33,36 +33,22 @@ string topologyString="";
 string selectDetector="ALL";
 string polarization="degALL";
 //string tag="_bkgndSample_mEllipse_8288_tLT1";
-string tag="_kmatrix_mEllipse_8288_tLT1_mVH";
+//string tag="_flat_2018_8_v0_mEllipse_8288_t011_mVH_mDelta";
 
 //string tag="_b1_vectorps_as_etapi_BA";
-//string tag="_b1_vps_as_etapi_selectOmega_mEllipse";
 //string tag="_b1_vps_as_etapi_stdProtonPhotonExclusivity_chi13_for_thesis";
-//string tag="_flatetapi_mEllipse_8288_chi13_tpLT05_omegacut";
-//string tag="_data_2018_1_mEllipse_mMandelstam_t_mEbeam_mDelta_chi13";
-//string tag="_data_2017_BA";
 //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
 
 //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_mVH";
 //string tag="_data_2018_8_mEllipse_8288_tLT1_mVH";
 
-//string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
 //string tag="_nonres_eff_test_zlm_d2_matchingFlat2018_8_mEllipse";
 
 //string tag="_flat_2017_noSelections_for_thesis";
 //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
 //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
     
-//string tag="_data_2017_baseCuts_looseChiUE";
-
-//string tag="_flat_2017_vh_8288_tLT1_chi13_omegacut";
-//string tag="_malte_kmatrix_2018_8_mEllipse_8288_tLT1_chi13_omegacut";//_mPhotonETheta_mDelta";
-//string tag="_etapi_and_b1_as_etapi_mEllipse_8288_tLT1_chi13_omegacut";
-
-//string tag="_b1_as_4g_all_mEllipse_8288_tLT1_chi13_omegacut";
-//string tag="_etapi_as_4g_all_mEllipse_8288_tLT1_chi13_omegacut";
-//string tag="_b1_as_4g_chiSqUEOnly";
-
+string tag="_data_2018_8_looseDREventSelectSyst";
 int mcprocess=0;
 
 void DSelector_ver20::Init(TTree *locTree)
@@ -109,7 +95,7 @@ void DSelector_ver20::Init(TTree *locTree)
         dFlatTreeFileName = polarization+tag+"_treeFlat_DSelector.root"; //output flat tree (one combo per tree entry), "" for none
         //dFlatTreeName = polarization+tag+"_tree_flat"; //if blank, default name will be chosen
         dFlatTreeName = "tree_4g_flat"; //if blank, default name will be chosen
-	//dOutputTreeFileNameMap["deg000"] = "deg000"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
+	//dOutputTreeFileNameMap["copy"] = "dselector_deleteme_"+tag+".root"; // SOMETIMES Fill_OutputTree() FAILS BUT DOES NOT WITH AN ARGUMENT 
 	//dOutputTreeFileNameMap["deg045"] = "deg045"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
 	//dOutputTreeFileNameMap["deg090"] = "deg090"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
 	//dOutputTreeFileNameMap["deg135"] = "deg135"+tag+"_tree_DSelector.root"; //key is user-defined, value is output file name
@@ -2832,7 +2818,7 @@ void DSelector_ver20::Init(TTree *locTree)
         //groupHists.insert(histdef); 
         
         
-        if(showOutput){cout << endl << endl << "--------------------------------" << endl << "Initialized all histograms"  <<  endl;}
+        if(verbose){cout << endl << endl << "--------------------------------" << endl << "Initialized all histograms"  <<  endl;}
 
 
 
@@ -3035,7 +3021,7 @@ void DSelector_ver20::Init(TTree *locTree)
         //dTreeInterface->Clear_GetEntryBranches(); //now get none
         //dTreeInterface->Register_GetEntryBranch("Proton__P4"); //manually set the branches you want
 	//
-	if(showOutput) { cout << "Finished creating branch funamentals" <<endl; }
+	if(verbose) { cout << "Finished creating branch funamentals" <<endl; }
 
 } // end of initialization
 
@@ -3067,7 +3053,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
     	//if(itersToRun>100){ return kTRUE; }// ++itersToRun; //so we can just try to show the outut of one event 
 	++count_events;
-    	if(showOutput){cout << "Starting next process looping" << endl;}
+    	if(verbose){cout << "Starting next process looping" << endl;}
     	// The Process() function is called for each entry in the tree. The entry argument
     	// specifies which entry in the currently loaded tree is to be processed.
     	//
@@ -3106,7 +3092,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
     	    dIsPolarizedFlag = dAnalysisUtilities.Get_IsPolarizedBeam(locRunNumber, dIsPARAFlag);
             // AMO RUNS HAVE VALUE OF -1 , CHECK GLUEX_ROOT_ANALYSIS
     	    hasPolarizationAngle = dAnalysisUtilities.Get_PolarizationAngle(locRunNumber, locPolarizationAngle);
-    	    if(showOutput){cout << "Getting beam polarization and filling used runs" << endl;}
+    	    if(verbose){cout << "Getting beam polarization and filling used runs" << endl;}
     	    if (usedRuns.find(locRunNumber)==usedRuns.end()){
     	        if (hasPolarizationAngle) {
     	            dHist_BeamAngle->Fill(locPolarizationAngle);
@@ -3264,7 +3250,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
                         // NOTE THAT IF YOU USE RETURN HERE THE TREES THEMSELVES WOULD HAVE NEVER SET THE COMBO IS FALSE.
                         //    WE WOULD NEED TO LOOP OVER ALL THE COMBOS AND SET THEM FALSE HERE. BUT SINCE WE USE FLAT
                         //    TREES THIS IS NOT A PROBLEM SINCE THE FILL_FUNDAMENTAL WOULD HAVE NEVER BEEN CALLED
-			//return kTRUE;
+			return kTRUE;
 		}
 		// SO THE COMBINATION OF THE ABOVE RETURN COMMANDS SHOULD MAKE IT SUCH THAT ONLY EVENTS WITH THROWN VALUES THAT PASS THE SELECTIONS AND ARE SELECTED BY THE REJECTION SAMPLING 
 		// MOVE ON TO THE NEXT STEP OF THE PROCESS FUNCTION WHERE COMBOS ARE LOOPED OVER. THE EVENT IS SAVED IF THESE EVENTS HAVE AT LEAST ONE COMBO THAT PASSED THE SELECTION, THAT DID
@@ -3321,13 +3307,13 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
 
 
-    map<TString, vector<topology>> topologyMap;
+    //map<TString, vector<topology>> topologyMap;
 
     //Loop over combos
     //dHist_numCombos->Fill(Get_NumCombos());
     for(UInt_t loc_i = 0; loc_i < Get_NumCombos(); ++loc_i)
     {
-        if(showOutput) { cout << "\n\n\n*********************************************************\n**************************************************\n########    EventIdx, ComboIdx: " << (eventIdx) << ", " << loc_i << "    #############" << endl; }
+        if(verbose) { cout << "\n\n\n*********************************************************\n**************************************************\n########    EventIdx, ComboIdx: " << (eventIdx) << ", " << loc_i << "    #############" << endl; }
 
 	// Fill the polarization angle MPE = multiple photons per event or for all combinations. We will do this instead of filling per event just in case there was for whatever reason a photon in a combo can be matched with a tagged photon with a different beam polarization
 	if (keepPolarization) {
@@ -3346,22 +3332,22 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //Used for tracking uniqueness when filling histograms, and for determining unused particles
 
         //Step 0
-        if(showOutput){cout << "** Getting tracks p4, x4, ids" << endl;}
+        if(verbose){cout << "** Getting tracks p4, x4, ids" << endl;}
         Int_t locBeamID = dComboBeamWrapper->Get_BeamID();
-        if(showOutput){cout <<"Got beamID"<<endl;}
+        if(verbose){cout <<"Got beamID"<<endl;}
         Int_t locProtonTrackID = dProtonWrapper->Get_TrackID();
-        if(showOutput){cout <<"Got ProtonID"<<endl;}
+        if(verbose){cout <<"Got ProtonID"<<endl;}
 
         //Step 1
         Int_t locPhoton1NeutralID = dPhoton1Wrapper->Get_NeutralID();
         Int_t locPhoton2NeutralID = dPhoton2Wrapper->Get_NeutralID();
-        if(showOutput){cout <<"Got photon1/2 ID"<<endl;}
+        if(verbose){cout <<"Got photon1/2 ID"<<endl;}
 
         //Step 2
         Int_t locPhoton3NeutralID = dPhoton3Wrapper->Get_NeutralID();
         Int_t locPhoton4NeutralID = dPhoton4Wrapper->Get_NeutralID();
-        if(showOutput){cout <<"Got photon3/4 ID"<<endl;}
-        if(showOutput){cout << "Got Beam, proton, 4 photon IDs" << endl;}
+        if(verbose){cout <<"Got photon3/4 ID"<<endl;}
+        if(verbose){cout << "Got Beam, proton, 4 photon IDs" << endl;}
 
         // ********************************************************************************************************************************
         // Get 4 Momenta!!! 
@@ -3369,13 +3355,13 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
         // Get P4's: //is kinfit if kinfit performed, else is measured
         //dTargetP4 is target p4
-        if(showOutput){cout << "** Getting kin fitted X4, P4" << endl;}
+        if(verbose){cout << "** Getting kin fitted X4, P4" << endl;}
         //Step 0
         TLorentzVector locBeamP4 = dComboBeamWrapper->Get_P4_Measured();
         TLorentzVector locBeamX4 = dComboBeamWrapper->Get_X4_Measured();
 
 
-        //if(showOutput){cout << "Got kin fitted beam x4 P4" << endl;}
+        //if(verbose){cout << "Got kin fitted beam x4 P4" << endl;}
         TLorentzVector locProtonP4 = dProtonWrapper->Get_P4_Measured();
         TLorentzVector locProtonX4 = dProtonWrapper->Get_X4_Measured();
         protonX4[0]=locProtonX4.X();
@@ -3388,17 +3374,17 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //TLorentzVector locDecayingPi0P4 = dDecayingPi0Wrapper->Get_P4();
         TLorentzVector locPhoton1X4_Kin = dPhoton1Wrapper->Get_X4();
         TLorentzVector locPhoton2X4_Kin = dPhoton2Wrapper->Get_X4();
-        if(showOutput){cout << "Got kin fitted photon 1,2 x4 and P4" << endl;}
+        if(verbose){cout << "Got kin fitted photon 1,2 x4 and P4" << endl;}
         //Step 2
         //TLorentzVector locDecayingEtaP4 = dDecayingEtaWrapper->Get_P4();
         TLorentzVector locPhoton3X4_Kin = dPhoton3Wrapper->Get_X4();
         TLorentzVector locPhoton4X4_Kin = dPhoton4Wrapper->Get_X4();
-        if(showOutput){cout << "Got kin fitted photon 3,4 x4 and P4" << endl;}
+        if(verbose){cout << "Got kin fitted photon 3,4 x4 and P4" << endl;}
 
 
         // Get Measured P4's:
         //Step 0
-        if(showOutput){cout << "** Getting measured x4 p4" << endl;}
+        if(verbose){cout << "** Getting measured x4 p4" << endl;}
         TLorentzVector locBeamP4_Kin = dComboBeamWrapper->Get_P4();
         TLorentzVector locBeamX4_Kin = dComboBeamWrapper->Get_X4();
         TLorentzVector locProtonP4_Kin = dProtonWrapper->Get_P4();
@@ -3462,9 +3448,9 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         photonIds.push_back(locPhoton4NeutralID);
 
 	int nPhotons = (int) (allPhotonP4Vectors_Kin.size());
-	if(showOutput){cout << "There are " << nPhotons << " photons" << endl;  }
+	if(verbose){cout << "There are " << nPhotons << " photons" << endl;  }
 
-        if(showOutput){cout << "Got measured x4 p4 with using shower X4 for photons" << endl;}
+        if(verbose){cout << "Got measured x4 p4 with using shower X4 for photons" << endl;}
 
 
         TString composition = "";
@@ -3475,7 +3461,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 		for(UInt_t loc_i = 0; loc_i < Get_NumThrown(); ++loc_i)
 		{	
 			dThrownWrapper->Set_ArrayIndex( loc_i  );
-			if(showOutput)cout << "thrown PID: " << dThrownWrapper->Get_PID() << " with parent thrown index: " <<  dThrownWrapper->Get_ParentIndex() << endl;
+			if(verbose)cout << "thrown PID: " << dThrownWrapper->Get_PID() << " with parent thrown index: " <<  dThrownWrapper->Get_ParentIndex() << endl;
 			thrownPIDs.push_back(dThrownWrapper->Get_PID());
 			thrown_p4s.push_back(dThrownWrapper->Get_P4());
 			parentIDs.push_back(dThrownWrapper->Get_ParentIndex());
@@ -3501,9 +3487,9 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         	        }
         	        else { composition += "_"+parents_phs[iph]; }
         	}
-		if(showOutput)cout << "composition: " << composition << endl;
+		if(verbose)cout << "composition: " << composition << endl;
                 isTruePi0Eta = (composition=="(7)_(7)_(17)_(17)");
-		if(showOutput){cout << "(since this is a simulation)Determined composition of reconstructed pi0 and eta" << endl;}
+		if(verbose){cout << "(since this is a simulation)Determined composition of reconstructed pi0 and eta" << endl;}
 	}
 
 
@@ -3512,7 +3498,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
         // DO YOUR STUFF HERE
 
-        if(showOutput){cout << "** Combining 4-vectors to get pi0, eta, pi0eta, etaProton, pi0Proton" << endl;}
+        if(verbose){cout << "** Combining 4-vectors to get pi0, eta, pi0eta, etaProton, pi0Proton" << endl;}
         // Combine 4-vectors
         TLorentzVector locMissingP4 = locBeamP4 + dTargetP4;
         locMissingP4 -= locProtonP4 + locPhoton1P4 + locPhoton2P4 + locPhoton3P4 + locPhoton4P4;
@@ -3553,7 +3539,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	massGammaEta[1] = (locPhoton3P4_Kin + locPhoton4P4_Kin + locPhoton2P4_Kin).M();
 
 
-        if(showOutput){cout << "Combined 4-vectors" << endl;}
+        if(verbose){cout << "Combined 4-vectors" << endl;}
 
         /******************************************** EXECUTE ANALYSIS ACTIONS *******************************************/
 
@@ -3586,7 +3572,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         // ********************************************************************************************************************************
         // Calculating some variables!!! 
         // ********************************************************************************************************************************
-        if(showOutput){cout << "\nCalculating variables to fill the histograms with and to put into histVals..." << endl;}
+        if(verbose){cout << "\nCalculating variables to fill the histograms with and to put into histVals..." << endl;}
         //Missing Mass Squared
         locMissingMassSquared = locMissingP4.M2();
         // 4 Momenta related variables  
@@ -3631,7 +3617,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         locPi0Proton_Kin = mixingPi0Proton_Kin.M();
         locPi0Eta_Kin = mixingPi0Eta_Kin.M();
 	locPi0Eta_resolution = locPi0Eta_Kin-locPi0Eta_thrown;
-	if(showOutput){
+	if(verbose){
             cout << "locPi0Eta_Kin: " << locPi0Eta_Kin << endl;
 	    cout << "locPi0Eta_thrown: " << locPi0Eta_thrown << endl;
 	    cout << "locPi0Eta_resolution: " << locPi0Eta_resolution << endl;
@@ -3710,7 +3696,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         locMagP3Proton = TMath::Sqrt(TMath::Power(locProtonP4_Kin.Px(),2)+TMath::Power(locProtonP4_Kin.Py(),2)+TMath::Power(locProtonP4_Kin.Pz(),2));
 
 
-	if (showOutput){ cout << "Filling photon variables" << endl; } 
+	if (verbose){ cout << "Filling photon variables" << endl; } 
 
         TLorentzVector newPhotonP4Vector;
         TLorentzVector newPhotonX4Vector;
@@ -3719,47 +3705,48 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         TLorentzVector newPhotonVector_meas;
         DNeutralParticleHypothesis* newPhotonWrapper;
         for (auto iPhoton=0; iPhoton<nPhotons ; ++iPhoton){
-              newPhotonP4Vector = allPhotonP4Vectors_Kin[iPhoton];
-              newPhotonX4Vector = allPhotonX4Vectors_Kin[iPhoton];
-              newPhotonX4Vector_meas = allPhotonX4Vectors[iPhoton];
-              newPhotonVector_Shower = allPhoton4Vectors_Shower[iPhoton];
-              newPhotonVector_meas = allPhoton4Vectors_meas[iPhoton];
-              newPhotonWrapper = allPhotonWrappers[iPhoton];
-              //photonThetas[iPhoton] = newPhotonP4Vector.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
-              //photonPhis[iPhoton] = newPhotonP4Vector.Phi()*radToDeg;
-              photonThetas[iPhoton] = newPhotonVector_meas.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
-              photonPhis[iPhoton] = newPhotonVector_meas.Phi()*radToDeg;
-              photonEnergies[iPhoton] = newPhotonP4Vector.E();
-              photonXs_Kin[iPhoton] = newPhotonX4Vector.X();
-              photonYs_Kin[iPhoton] = newPhotonX4Vector.Y();
-              photonZs_Kin[iPhoton] = newPhotonX4Vector.Z();
-              photonTs_Kin[iPhoton] = newPhotonX4Vector.T();
+            if (verbose){ cout << "  loaded photon " << iPhoton << endl; }
+            newPhotonP4Vector = allPhotonP4Vectors_Kin[iPhoton];
+            newPhotonX4Vector = allPhotonX4Vectors_Kin[iPhoton];
+            newPhotonX4Vector_meas = allPhotonX4Vectors[iPhoton];
+            newPhotonVector_Shower = allPhoton4Vectors_Shower[iPhoton];
+            newPhotonVector_meas = allPhoton4Vectors_meas[iPhoton];
+            newPhotonWrapper = allPhotonWrappers[iPhoton];
+            //photonThetas[iPhoton] = newPhotonP4Vector.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
+            //photonPhis[iPhoton] = newPhotonP4Vector.Phi()*radToDeg;
+            photonThetas[iPhoton] = newPhotonVector_meas.Theta()*radToDeg; // *radToDeg; // IF WE WANT TO BRING BACK THE OLDER CUT, double counted in pPhotonTheta
+            photonPhis[iPhoton] = newPhotonVector_meas.Phi()*radToDeg;
+            photonEnergies[iPhoton] = newPhotonP4Vector.E();
+            photonXs_Kin[iPhoton] = newPhotonX4Vector.X();
+            photonYs_Kin[iPhoton] = newPhotonX4Vector.Y();
+            photonZs_Kin[iPhoton] = newPhotonX4Vector.Z();
+            photonTs_Kin[iPhoton] = newPhotonX4Vector.T();
 
-              photonThetas_fromX4_meas[iPhoton] = newPhotonX4Vector_meas.Theta()*radToDeg;
-              photonThetas_meas[iPhoton] = newPhotonVector_meas.Theta()*radToDeg;
-              photonThetas_Shower[iPhoton] = newPhotonVector_Shower.Theta()*radToDeg;
-              photonXs_Shower[iPhoton] = newPhotonVector_Shower.X();
-              photonYs_Shower[iPhoton] = newPhotonVector_Shower.Y();
-              photonZs_Shower[iPhoton] = newPhotonVector_Shower.Z();
-              photonTs_Shower[iPhoton] = newPhotonVector_Shower.T();
-              photonDeltaTs[iPhoton] = newPhotonX4Vector.T()-(dComboWrapper->Get_RFTime() + (newPhotonX4Vector.Z() - dComboWrapper->Get_TargetCenter().Z() )/29.9792458);
-              photonDetectedSyss[iPhoton] = newPhotonWrapper->Get_Detector_System_Timing();
-              E1E9_FCAL[iPhoton] = newPhotonWrapper->Get_E1E9_FCAL();
-              E9E25_FCAL[iPhoton] = newPhotonWrapper->Get_E9E25_FCAL();
-              SumU_FCAL[iPhoton] = newPhotonWrapper->Get_SumU_FCAL();
-              SumV_FCAL[iPhoton] = newPhotonWrapper->Get_SumV_FCAL();
-              Energy_BCALPreshower[iPhoton] = newPhotonWrapper->Get_Energy_BCALPreshower();
-              Energy_BCAL[iPhoton] = newPhotonWrapper->Get_Energy_BCAL();
-              SigLong_BCAL[iPhoton] = newPhotonWrapper->Get_SigLong_BCAL();
-              SigTheta_BCAL[iPhoton] = newPhotonWrapper->Get_SigTheta_BCAL();
-              showerQuality_FCAL[iPhoton] = newPhotonWrapper->Get_Shower_Quality();
-              SigTrans_BCAL[iPhoton] = newPhotonWrapper->Get_SigTrans_BCAL();
-              DeltaPhi_BCAL[iPhoton] = newPhotonWrapper->Get_TrackBCAL_DeltaPhi();
-              DeltaZ_BCAL[iPhoton] = newPhotonWrapper->Get_TrackBCAL_DeltaZ();
-              DOCA_FCAL[iPhoton] = newPhotonWrapper->Get_TrackFCAL_DOCA();
+            photonThetas_fromX4_meas[iPhoton] = newPhotonX4Vector_meas.Theta()*radToDeg;
+            photonThetas_meas[iPhoton] = newPhotonVector_meas.Theta()*radToDeg;
+            photonThetas_Shower[iPhoton] = newPhotonVector_Shower.Theta()*radToDeg;
+            photonXs_Shower[iPhoton] = newPhotonVector_Shower.X();
+            photonYs_Shower[iPhoton] = newPhotonVector_Shower.Y();
+            photonZs_Shower[iPhoton] = newPhotonVector_Shower.Z();
+            photonTs_Shower[iPhoton] = newPhotonVector_Shower.T();
+            photonDeltaTs[iPhoton] = newPhotonX4Vector.T()-(dComboWrapper->Get_RFTime() + (newPhotonX4Vector.Z() - dComboWrapper->Get_TargetCenter().Z() )/29.9792458);
+            photonDetectedSyss[iPhoton] = newPhotonWrapper->Get_Detector_System_Timing();
+            E1E9_FCAL[iPhoton] = newPhotonWrapper->Get_E1E9_FCAL();
+            E9E25_FCAL[iPhoton] = newPhotonWrapper->Get_E9E25_FCAL();
+            SumU_FCAL[iPhoton] = newPhotonWrapper->Get_SumU_FCAL();
+            SumV_FCAL[iPhoton] = newPhotonWrapper->Get_SumV_FCAL();
+            Energy_BCALPreshower[iPhoton] = newPhotonWrapper->Get_Energy_BCALPreshower();
+            Energy_BCAL[iPhoton] = newPhotonWrapper->Get_Energy_BCAL();
+            SigLong_BCAL[iPhoton] = newPhotonWrapper->Get_SigLong_BCAL();
+            SigTheta_BCAL[iPhoton] = newPhotonWrapper->Get_SigTheta_BCAL();
+            showerQuality_FCAL[iPhoton] = newPhotonWrapper->Get_Shower_Quality();
+            SigTrans_BCAL[iPhoton] = newPhotonWrapper->Get_SigTrans_BCAL();
+            DeltaPhi_BCAL[iPhoton] = newPhotonWrapper->Get_TrackBCAL_DeltaPhi();
+            DeltaZ_BCAL[iPhoton] = newPhotonWrapper->Get_TrackBCAL_DeltaZ();
+            DOCA_FCAL[iPhoton] = newPhotonWrapper->Get_TrackFCAL_DOCA();
         }
 
-        if(showOutput) { cout << "Getting some combo specific variables like CL" << endl; }
+        if(verbose) { cout << "Getting some combo specific variables like CL" << endl; }
         //Kinematic fit variables
         locCLKinFit = dComboWrapper->Get_ConfidenceLevel_KinFit("");
         locUnusedEnergy = dComboWrapper->Get_Energy_UnusedShowers();
@@ -3771,7 +3758,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //TString DOF; DOF.Form("%d", dComboWrapper->Get_NDF_KinFit(""));
         //TString title = "Num DOF: "; title+=DOF.Data();
 
-        if(showOutput) { cout << "Getting some shower variables" << endl; }
+        if(verbose) { cout << "Getting some shower variables" << endl; }
         locE1E9_FCAL_proton = dProtonWrapper->Get_E1E9_FCAL();
         locE9E25_FCAL_proton = dProtonWrapper->Get_E9E25_FCAL();
         locSumU_FCAL_proton = dProtonWrapper->Get_SumU_FCAL();
@@ -3807,7 +3794,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         if (dProtonWrapper->Get_Detector_System_Timing() == SYS_START){ inSTART = 1;}
         if (dProtonWrapper->Get_Detector_System_Timing() == SYS_NULL){ inSYS_NULL = 1;}
 
-        if(showOutput) { cout << "Got timing quantites" << endl; }
+        if(verbose) { cout << "Got timing quantites" << endl; }
 
 
         // CALCULATING PAIRWISE QUANTITES BETWEEN PHOTONS.
@@ -3848,12 +3835,12 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
 
 
-        if(showOutput){ cout << "\nCalculating pairwise quantities between photons, doing uniqueness tracking now instead of later since there will be a vector of data to fill\n-----------------------------------------" << endl;}
+        if(verbose){ cout << "\nCalculating pairwise quantities between photons, doing uniqueness tracking now instead of later since there will be a vector of data to fill\n-----------------------------------------" << endl;}
         std::vector<TLorentzVector> photonX4 = {locPhoton1X4_Shower, locPhoton2X4_Shower, locPhoton3X4_Shower, locPhoton4X4_Shower};
-        if(showOutput){ cout << "Set up photonX4 and photonIds to use for pairwise quantity calculating!" << endl;}
+        if(verbose){ cout << "Set up photonX4 and photonIds to use for pairwise quantity calculating!" << endl;}
         for (int i=0;i<4;++i){
         	for(int j=i+1; j<4;j++){
-        		if(showOutput){ cout << "-- ith,jth photon: " << std::to_string(i) << ", " << std::to_string(j) << endl;}
+        		if(verbose){ cout << "-- ith,jth photon: " << std::to_string(i) << ", " << std::to_string(j) << endl;}
         		// if both the photons are not in the resppective detector there is no point on continuing to check the histograms + cuts + uniquenss tracking
         		if(photonDetectedSyss[i]==SYS_FCAL && photonDetectedSyss[j]==SYS_FCAL){
         			++countBothInFCAL;
@@ -3879,7 +3866,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
                         	deltaZ_ij = abs(photonX4[i].Z()-photonX4[j].Z());
                         	deltaPhi_ij = abs(photonX4[i].Phi()-photonX4[j].Phi())*radToDeg;
                         	if (deltaPhi_ij > 180) { deltaPhi_ij = 360-deltaPhi_ij; }
-        			if(showOutput){ cout << "BOTH IN BCAL - Got BCAL angle, deltaZ, deltaPhi, distanceOnCylinder!" << endl;}
+        			if(verbose){ cout << "BOTH IN BCAL - Got BCAL angle, deltaZ, deltaPhi, distanceOnCylinder!" << endl;}
                         	//dij3 = (photonX4[i]-photonX4[j]).Vect().Mag();
 
         			// a better metric to use would be to use dij which is the distance conneting two points on the cylindrical BCAL BUT constraining to be on the surface to tell us about separation
@@ -3895,20 +3882,20 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         			delta_Thetaij_BCAL = theta_BCALj - theta_BCALi;
         			dij = TMath::Sqrt(TMath::Sq(delta_Rij_BCAL)+TMath::Sq((65+delta_Rij_BCAL)*delta_Thetaij_BCAL)+TMath::Sq(delta_Zij_BCAL));
 
-                                if(showOutput)cout << "BCAL dij: " << dij << endl;
+                                if(verbose)cout << "BCAL dij: " << dij << endl;
         			dijVecBCAL.push_back(dij);
         			//angle_ijVec[hist_id].push_back(angle_ij);
         			//deltaZ_ijVec[hist_id].push_back(deltaZ_ij);
         		}
         		else if((photonDetectedSyss[i]==SYS_BCAL && photonDetectedSyss[j]==SYS_FCAL) || (photonDetectedSyss[i]==SYS_FCAL && photonDetectedSyss[j]==SYS_BCAL)){
-                                if(showOutput)cout << "SPLIT" << endl;
+                                if(verbose)cout << "SPLIT" << endl;
         			++countNotInEither;
-        			if(showOutput){ cout << "ONE IN FCAL ONE IN BCAL" << endl;}
+        			if(verbose){ cout << "ONE IN FCAL ONE IN BCAL" << endl;}
         		}
         		else { cout << "\n\n*************************\nERROR - Pairwise both in FCAL, both in FCAL, in either, is not complete!\n***********************************" << endl;}
         	}
         }
-        if((countBothInBCAL+countNotInEither+countBothInFCAL)==6){ if(showOutput) {cout << "\n\n*********************\nPairwise photons counted correctly!\n*******************\nNum both in FCAL: " + std::to_string(countBothInFCAL) +"\nNum both in BCAL: " + std::to_string(countBothInBCAL) + "\nNum one in either: " + std::to_string(countNotInEither)<< endl; }}
+        if((countBothInBCAL+countNotInEither+countBothInFCAL)==6){ if(verbose) {cout << "\n\n*********************\nPairwise photons counted correctly!\n*******************\nNum both in FCAL: " + std::to_string(countBothInFCAL) +"\nNum both in BCAL: " + std::to_string(countBothInBCAL) + "\nNum one in either: " + std::to_string(countNotInEither)<< endl; }}
         else { cout << "\n\n*********************\nERROR - Pairwise photons not counted correctly!\n*******************\n" << endl;}
 
         // *********************** PHOTON PAIR PLOTS ************************
@@ -3928,16 +3915,16 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 //            group_pairBCAL.allHists_1D[0].values.push_back( &dijVecBCAL[iPair]);
 //        }
 
-        if(showOutput){ cout << endl << endl; }
-        if(showOutput){ cout << "Calculating prodplanephi and cosTheta in different system" << endl;}
+        if(verbose){ cout << endl << endl; }
+        if(verbose){ cout << "Calculating prodplanephi and cosTheta in different system" << endl;}
         // calculating phi
         //double decayPlanePhi = dAnalysisUtilities.Calc_DecayPlanePsi_Vector_3BodyDecay(locBeamE, Proton, locProtonP4_Kin, mixingPi0Eta_Kin, locPi0P4_Kin, locEtaP4_Kin, locDecayPlaneTheta);
         double prodPlanePhi_eta = locEtaP4_Kin.Phi(); //dAnalysisUtilities.Calc_ProdPlanePhi_Pseudoscalar(locBeamE, Proton, locEtaP4_Kin);
         double prodPlanePhi_pi0 = locPi0P4_Kin.Phi(); //dAnalysisUtilities.Calc_ProdPlanePhi_Pseudoscalar(locBeamE, Proton, locPi0P4_Kin);
-	if(showOutput)cout << "prodPlanePhi_eta: " << prodPlanePhi_eta << endl;
+	if(verbose)cout << "prodPlanePhi_eta: " << prodPlanePhi_eta << endl;
         locPhi_eta = prodPlanePhi_eta*radToDeg;
         locPhi_pi0 = prodPlanePhi_pi0*radToDeg;
-	if(showOutput)cout << "locPhi_eta: " << locPhi_eta << endl;
+	if(verbose)cout << "locPhi_eta: " << locPhi_eta << endl;
 
         // Calculating kinematic variables like t and cosTheta
         mandelstam_t = -(dTargetP4-locProtonP4_Kin).M2();
@@ -3961,8 +3948,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	else {
 		tpi0_recCounts = idx_t_pi0+num_tBins*idx_m;
 	}
-	if(showOutput)cout << "teta_recCounts: " << teta_recCounts << endl;
-	if(showOutput)cout << "tpi0_recCounts: " << tpi0_recCounts << endl;
+	if(verbose)cout << "teta_recCounts: " << teta_recCounts << endl;
+	if(verbose)cout << "tpi0_recCounts: " << tpi0_recCounts << endl;
 
         //////////////////////////////////////
         //////////////////////////////////////
@@ -4069,8 +4056,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	double EX_cm = (cm_vec.M2()+mixingPi0Eta_cm.M2()-locProtonP4_Kin.M2())/2/cm_vec.M();
 	double PX_cm = sqrt(EX_cm*EX_cm-mixingPi0Eta_Kin.M2());
 	double shiftFromEqn = (PBeam_cm-PX_cm)*(PBeam_cm-PX_cm);
-	if(showOutput)cout << "Shift, Shift from eqn = " << shift << ", " << shiftFromEqn << endl;
-	if(showOutput)cout << "Mandelstam_t = " << mandelstam_t << endl;
+	if(verbose)cout << "Shift, Shift from eqn = " << shift << ", " << shiftFromEqn << endl;
+	if(verbose)cout << "Mandelstam_t = " << mandelstam_t << endl;
 
 
 	
@@ -4102,7 +4089,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 //        cosTheta_pi0_hel = angles_pi0.CosTheta();
 //        cosTheta_eta_hel = angles_eta.CosTheta();
 //        cosTheta_pi0eta_hel = angles_pi0eta.CosTheta();
-//	if(showOutput)cout << "cosTheta_pi0eta_hel: " << cosTheta_pi0eta_hel << endl;
+//	if(verbose)cout << "cosTheta_pi0eta_hel: " << cosTheta_pi0eta_hel << endl;
 //        theta_pi0_hel = angles_pi0.Theta();
 //        theta_eta_hel = angles_eta.Theta();
 //        phi_pi0_hel = angles_pi0.Phi()*radToDeg;
@@ -4225,7 +4212,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
         // Angle() returns the angle between two vectors where the angle is in radians.
         angleBetweenPi0Eta = pi0_res_unit.Angle(eta_res_unit)*radToDeg;
-        if(showOutput) { cout << "Filling inCone bools" << endl; }
+        if(verbose) { cout << "Filling inCone bools" << endl; }
         for (int iDelta=0; iDelta<2; ++iDelta){
             // THere should be some redundancy here. since mixingPi0Eta is the sum fo the individual 4 vectors it must be that the pi0 and eta decaay back to back in the resonance rest frame.
             // Therefore largeAngle=180 always and only 1 of the mesons have to be in the cone. As a check it is good to see if the number of times it passes these 3 degenerate conditions are the same!
@@ -4272,10 +4259,10 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         vanHove_y = q*sin(omega);
 
         omega = omega*radToDeg;
-        if(showOutput) { cout << "Got Vanhove quantities" << endl; }
+        if(verbose) { cout << "Got Vanhove quantities" << endl; }
 
         // eow that we gotten the PIDs we can also do our uniqueness tracking setup now.
-        if(showOutput){cout << "Setting up the sets and maps to be used in uniqueness tracking" << endl;}
+        if(verbose){cout << "Setting up the sets and maps to be used in uniqueness tracking" << endl;}
 
         // ********************************************************************************************************************************
         // 			// UNIQUENESS TRACKING 
@@ -4415,7 +4402,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         // ********************************************************************************************************************************
         // Recomputing some booleans since they could not have been sucessfully initialized without running though the loop first.
         // ********************************************************************************************************************************
-        if(showOutput){cout << "Re-evaluating bool variables to fill into histCuts" << endl;}
+        if(verbose){cout << "Re-evaluating bool variables to fill into histCuts" << endl;}
 
         // Beam cuts
         pBeamAsymE = locBeamE > 8.0 && locBeamE < 8.7;
@@ -4489,7 +4476,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	pLooseChiSq = locChiSqKinFit <= 500;
         chiSq100 = locChiSqKinFit <= 100;
         pDeltaTRF = abs(locDeltaTRF) <= RFCut;
-        pMissingMassSquared = locMissingMassSquared <= MMsqCut;
+        pMissingMassSquared = abs(locMissingMassSquared) <= MMsqCut;
 
         // Neutral Cuts
         pdij3pass = 1;
@@ -4620,8 +4607,16 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 
 	/////////////////////// ************ BASE CUTS *********************
 	//baseCuts = pUnusedEnergy*pChiSq*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton; // REMOVED PHOTON E AND THETA CUTS FOR TESTING
-	baseCuts = pUnusedEnergy*pChiSq*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton*pdEdxCDCProton*pMissingMassSquared;
+	//baseCuts = pUnusedEnergy*pChiSq*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton*pdEdxCDCProton*pMissingMassSquared;
 	baseCuts_mChiUE = cata*pShowerQuality*pdij3pass*pPhotonE*pPhotonTheta*pMagP3Proton*pzCutmin*pRProton*pMissingMassSquared*pdEdxCDCProton;
+        // BASE CUTS FOR DOUBLE REGGE STUDY OF EVENT SELECTION SYSTEMATICS
+	baseCuts = (locUnusedEnergy<10)*(locChiSqKinFit<50)*
+            ((photonThetas[0]>=1.5 && photonThetas[0]<=11) || photonThetas[0]>=11.4)*
+            ((photonThetas[1]>=1.5 && photonThetas[1]<=11) || photonThetas[1]>=11.4)*
+            ((photonThetas[2]>=1.5 && photonThetas[2]<=11) || photonThetas[2]>=11.4)*
+            ((photonThetas[3]>=1.5 && photonThetas[3]<=11) || photonThetas[3]>=11.4)*
+            (locMagP3Proton>0.3)*(locdzProton>50)*(locdzProton<80)* //(abs(locMissingMassSquared)<0.1)* // REMOVE MMSQ, <0.1 BASICALLY DOES NOTHING
+            pPhotonE*pdEdxCDCProton*pMpi0etaDoubleRegge*pBeamE82to88; // last line contains unchanged selections
 	/////////////////////// 
 	looseCutsUEChiSq = baseCuts_mChiUE*chiSq100*pLooseUnusedEnergy;
         kinematicSelected_looseCutsUEChiSq = ptpLT1*!pMPi0P14*pBeamE8GeVPlus*looseCutsUEChiSq;
@@ -4702,18 +4697,18 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 		}
 	}
 
-	if(showOutput)cout << "BA STUDY OF BARYONS\n------------------------" << endl;
+	if(verbose)cout << "BA STUDY OF BARYONS\n------------------------" << endl;
 	for (int iMass=0; iMass<numBaryonBins; ++iMass){
 		pMpi0pFastEta[iMass] = baseAsymCut_fastEta*(minPi0P[iMass] < locPi0Proton_Kin)*(locPi0Proton_Kin < maxPi0P[iMass]);
 		pMetapFastPi0[iMass] = baseAsymCut_mDelta_fastPi0*(minEtaP[iMass] < locEtaProton_Kin)*(locEtaProton_Kin < maxEtaP[iMass]);
-		if(showOutput)cout << "iMass: " << iMass << endl;
+		if(verbose)cout << "iMass: " << iMass << endl;
 		for (int iteta=0; iteta<numTBins; ++iteta){
-			if(showOutput)cout << "iteta: " << iteta << endl;
+			if(verbose)cout << "iteta: " << iteta << endl;
 			bool select_teta_bin = (iteta*0.2 < mandelstam_teta) && (mandelstam_teta < (iteta+1)*0.2);
 			bool select_tpi0_bin = (iteta*0.2 < mandelstam_tpi0) && (mandelstam_tpi0 < (iteta+1)*0.2);
-			if(showOutput)cout << "*****" << endl;
-			if(showOutput) cout << "(tetaBin:"<<iteta<<")Requiring " << minPi0P[iMass] << " < M(pi0p) < " << maxPi0P[iMass] << endl;
-			if(showOutput) cout << "(tetaBin:"<<iteta<<")Requiring " << minEtaP[iMass] << " < M(etap) < " << maxEtaP[iMass] << endl;
+			if(verbose)cout << "*****" << endl;
+			if(verbose) cout << "(tetaBin:"<<iteta<<")Requiring " << minPi0P[iMass] << " < M(pi0p) < " << maxPi0P[iMass] << endl;
+			if(verbose) cout << "(tetaBin:"<<iteta<<")Requiring " << minEtaP[iMass] << " < M(etap) < " << maxEtaP[iMass] << endl;
 			pMpi0pBeamAsym_000[iMass*numTBins+iteta] = keepPolarization000*baseAsymCut_mDelta_fastEta*(minPi0P[iMass] < locPi0Proton_Kin)*(locPi0Proton_Kin < maxPi0P[iMass])*select_teta_bin;
 			pMpi0pBeamAsym_045[iMass*numTBins+iteta] = keepPolarization045*baseAsymCut_mDelta_fastEta*(minPi0P[iMass] < locPi0Proton_Kin)*(locPi0Proton_Kin < maxPi0P[iMass])*select_teta_bin;
 			pMpi0pBeamAsym_090[iMass*numTBins+iteta] = keepPolarization090*baseAsymCut_mDelta_fastEta*(minPi0P[iMass] < locPi0Proton_Kin)*(locPi0Proton_Kin < maxPi0P[iMass])*select_teta_bin;
@@ -4727,8 +4722,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 		}
 	}
 
-	if(showOutput)cout << "BA STUDY VARYING M(PI0ETA) and teta/tpi\n------------------------" << endl;
-        if(showOutput)cout << "Hijack this loop and also vary trecoil/u3 and teta/pi" << endl;
+	if(verbose)cout << "BA STUDY VARYING M(PI0ETA) and teta/tpi\n------------------------" << endl;
+        if(verbose)cout << "Hijack this loop and also vary trecoil/u3 and teta/pi" << endl;
 	for (int iteta=0; iteta<6; ++iteta){
 		bool select_teta_bin;
 		bool select_tpi0_bin;
@@ -4738,7 +4733,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	       		select_tpi0_bin = (iteta*0.2 < mandelstam_tpi0) && (mandelstam_tpi0 < (iteta+1)*0.2);
 		}
 		else {
-			if(showOutput)cout << "Also requiring 1 < teta/tpi0" << endl;
+			if(verbose)cout << "Also requiring 1 < teta/tpi0" << endl;
 			select_teta_bin = mandelstam_teta > 1;
 			select_tpi0_bin = mandelstam_tpi0 > 1;
 		}
@@ -5024,12 +5019,12 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	//dTreeInterface->Fill_Fundamental<Float_t>("DataWeight", weightAS_BS, loc_i);
 
 	if ( abs(weightAS_BS)>1){
-		if(showOutput)cout << "weightBS,weightAS: " << weightBS << ", " << weightAS << endl;
+		if(verbose)cout << "weightBS,weightAS: " << weightBS << ", " << weightAS << endl;
 	}
 
 	++count_combos;
         if (allGeneralCutsPassed*withinCone[1]) {
-            if(showOutput){ cout << "$$$Checking Angles of the combo in GJ!!!\n" << angles_pi0.X() << ","<< angles_pi0.Y() << ","<< angles_pi0.Z() << "," << angles_eta.X() << ","<< angles_eta.Y() << ","<< angles_eta.Z() << endl;}
+            if(verbose){ cout << "$$$Checking Angles of the combo in GJ!!!\n" << angles_pi0.X() << ","<< angles_pi0.Y() << ","<< angles_pi0.Z() << "," << angles_eta.X() << ","<< angles_eta.Y() << ","<< angles_eta.Z() << endl;}
         }
         if(pShowerQuality){ ++count_ShowerQuality; dHist_Cuts->Fill(cutNames[0],1);}
         if(pBeamE8GeVPlus){ ++count_BeamE8GeVPlus; dHist_Cuts->Fill(cutNames[1],1);} 
@@ -5050,7 +5045,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	if(ptpLT1){ ++count_seanResTest; dHist_Cuts->Fill(cutNames[16],1);}
 
 
-        if(showOutput) {cout << "Start Filling histVals and histCuts" << endl;}
+        if(verbose) {cout << "Start Filling histVals and histCuts" << endl;}
 
 
         if(inBox_noOtherCuts[4]){ whichSignalRegion=1; } // signal
@@ -5079,13 +5074,13 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //photons that could be in each RF bunch.  
 
 
-        if(showOutput){cout << endl << endl << "\n\nFilling histograms with uniqueness tracking!" << endl << "******************************************" << endl;}
+        if(verbose){cout << endl << endl << "\n\nFilling histograms with uniqueness tracking!" << endl << "******************************************" << endl;}
 //        group_PhNB.fillHistograms_vectorMap(beingUsedNeutralIds);
 //        group_pairFCAL.fillHistograms_vectorMap(usedPairIdsFCAL);
 //        group_pairBCAL.fillHistograms_vectorMap(usedPairIdsBCAL);
 //        groupHists.saveHistograms();
 
-	if(showOutput){ cout << "Filling histogram's uniqueness elements" << endl; }
+	if(verbose){ cout << "Filling histogram's uniqueness elements" << endl; }
 
 	if (locNumThrown!=0){
         	TString beamProtonID = to_string(locBeamID)+"_"+to_string(locProtonTrackID);
@@ -5096,18 +5091,18 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         	locUnusedEnergy = dComboWrapper->Get_Energy_UnusedShowers();
         	locNumUnusedShowers = dComboWrapper->Get_NumUnusedShowers();
                 cout << "locNumUnusedShowers: " << static_cast<unsigned>(dComboWrapper->Get_NumUnusedShowers()) << endl;
-        	topology someTopology;
-        	someTopology.locThrownTopology = locThrownTopology;
-        	someTopology.composition = composition;
-        	someTopology.beamProtonID = beamProtonID;
-        	someTopology.spectroscopicID = spectroscopicID;
-        	someTopology.chiSq = locChiSqKinFit;
-        	someTopology.unusedEnergy = locUnusedEnergy;
-        	someTopology.nUnusedShowers = locNumUnusedShowers;
-        	someTopology.pi0Mass = locPi0Mass_Kin;
-        	someTopology.etaMass = locEtaMass_Kin;
-        	someTopology.pi0etaMass = locPi0Eta_Kin;
-        	topologyMap["none"].push_back(someTopology);
+        	//topology someTopology;
+        	//someTopology.locThrownTopology = locThrownTopology;
+        	//someTopology.composition = composition;
+        	//someTopology.beamProtonID = beamProtonID;
+        	//someTopology.spectroscopicID = spectroscopicID;
+        	//someTopology.chiSq = locChiSqKinFit;
+        	//someTopology.unusedEnergy = locUnusedEnergy;
+        	//someTopology.nUnusedShowers = locNumUnusedShowers;
+        	//someTopology.pi0Mass = locPi0Mass_Kin;
+        	//someTopology.etaMass = locEtaMass_Kin;
+        	//someTopology.pi0etaMass = locPi0Eta_Kin;
+        	//topologyMap["none"].push_back(someTopology);
 	}
 
 	if ( selectDetector == "FCAL" ) { detectorCut=pEtaInFCAL; }
@@ -5138,32 +5133,29 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //cout << "(BEFORE) base, inBox, inRF, AccWeight, weightBS: " << mEllipse_pre << ", " << inBox_noOtherCuts[4] << ", " << pDeltaTRF << ", " << weightAS << ", " << weightBS << endl;
         //cout << "RFtime: " << locDeltaTRF << endl;
         //if(!detectorCut){
-        //if (!mMPi0P14_VH || !detectorCut){
-        if (!mEllipse_pre || !detectorCut){
+        //if (!mEllipse_pre || !detectorCut){
         //if (!((locChiSqKinFit<13.277)*(pUnusedEnergy)) || !detectorCut){
         //if (inBox_noOtherCuts[4]*pDeltaTRF || inBox_noOtherCuts[9]){ //[DATA SIDEBANDS] -  4 is signal region, 9 would be the skip regions (weight=0)
         //if (!(inBox[4]*pDeltaTRF) || !detectorCut){ // [DATA SIGNAL]
         //if (inBox_noOtherCuts[9]){ // [FLAT SIGNAL+SIDEBANDS], just ignore skip to save on file space
         // ****************** FOR SIDEBAND AND SIGNAL REGION SELECTION **************
-        
         //if (!((inBox[10] || inBox[11] || inBox[12])*!pDeltaTRF) || !detectorCut)
         //if (!(allGeneralCutsPassed*pDeltaTRF) || !detectorCut)
         //if (!(allGeneralCutsPassed*!pDeltaTRF) || !detectorCut)
         //if (!mEllipse_pre_tAll || !detectorCut)  // Deck analysis
-        //if (!mEllipse_pre || !detectorCut) //  // Q-values
         //if (!kinematicSelected_looseCutsUEChiSq || !detectorCut) // for studying which chiSq and UE to choose
         //if (!combinatoricStudy || !detectorCut) // studying combinatorics 
         //if (!mEllipseLooseUEChiSq_pre || !detectorCut)
 	//if (!allGeneralCutsSinglePolarization || !detectorCut) // For Matt's amptools studies
         //if (false){
-        //if (baseCuts){
-	    if (showOutput) { cout << "Did not pass cut, moving on.... " << endl; }  
+        if (!baseCuts || !detectorCut){
+	    if (verbose) { cout << "Did not pass cut, moving on.... " << endl; }  
             dComboWrapper->Set_IsComboCut(true); continue; 
         }
 
 
         // Some code to do uniqueness tracking
-	if (showOutput) { cout << "Passed cut, continuing.... " << endl; }  
+	if (verbose) { cout << "Passed cut, continuing.... " << endl; }  
 	if (used1234B.find(using1234B)==used1234B.end()){
             used1234B.insert(using1234B);
             isNotRepeated_pi0eta=true;
@@ -5185,7 +5177,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 	if (used12B.find(using12B)==used12B.end()){
             used12B.insert(using12B);
 	    ++countNewPi0;
-	    if(showOutput)cout << "new ph12B number: " << countNewPi0 << endl; 
+	    if(verbose)cout << "new ph12B number: " << countNewPi0 << endl; 
             isNotRepeated_pi0=true;
         }
         else { isNotRepeated_pi0=false; } 
@@ -5220,26 +5212,26 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
 		map_uniqueSpectroscopicID[using34B] = loc_i;
         }
 	paddedCombo=to_string(map_uniqueSpectroscopicID[using34B]);
-	if(showOutput){ cout << "Before paddedCombo: " << paddedCombo << endl; }
+	if(verbose){ cout << "Before paddedCombo: " << paddedCombo << endl; }
 	digitsInCombo=paddedCombo.length();
-	if(showOutput){ cout << "digitsInCombo: " << digitsInCombo << endl; }
-	if(showOutput){ cout << "maxDigitsInCombo: " << maxDigitsInCombo << endl; }
-	if(showOutput){ cout << "maxDigitsInCombo-digitsInCombo: " << maxDigitsInCombo-digitsInCombo << endl; }
+	if(verbose){ cout << "digitsInCombo: " << digitsInCombo << endl; }
+	if(verbose){ cout << "maxDigitsInCombo: " << maxDigitsInCombo << endl; }
+	if(verbose){ cout << "maxDigitsInCombo-digitsInCombo: " << maxDigitsInCombo-digitsInCombo << endl; }
 	for ( int idigit=0; idigit < maxDigitsInCombo-digitsInCombo; ++idigit){
 		paddedCombo = "0" + paddedCombo;
 	}
-	if(showOutput){ cout << "Final paddedCombo: " << paddedCombo << endl; }
-	if(showOutput){ cout << "Final paddedEvent: " << paddedEvent << endl; }
-	if(showOutput){ cout << "Final paddedRun: " << paddedRun << endl; }
+	if(verbose){ cout << "Final paddedCombo: " << paddedCombo << endl; }
+	if(verbose){ cout << "Final paddedEvent: " << paddedEvent << endl; }
+	if(verbose){ cout << "Final paddedRun: " << paddedRun << endl; }
 	string s_spectroscopicComboID = "1"+paddedRun+paddedEvent+paddedCombo;
-	if(showOutput){ cout << "1+paddedRun+paddedEvent+paddedCombo: " << s_spectroscopicComboID << endl; }
+	if(verbose){ cout << "1+paddedRun+paddedEvent+paddedCombo: " << s_spectroscopicComboID << endl; }
 	spectroscopicComboID = (ULong64_t)stoull(s_spectroscopicComboID); 
 	//digitsInSpectroscopicComboID = (int)log10(spectroscopicComboID);
-	if(showOutput){ cout << "spectroscopicComboID: " << spectroscopicComboID << endl; }
+	if(verbose){ cout << "spectroscopicComboID: " << spectroscopicComboID << endl; }
 
         
 
-	if (showOutput){ cout << "Calculated uniqueness booleans" << endl; } 
+	if (verbose){ cout << "Calculated uniqueness booleans" << endl; } 
 
 
 
@@ -5330,7 +5322,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         dFlatTreeInterface->Fill_Fundamental<bool>("beamPhotonMatchToThrown", beamPhotonMatchToThrown);
         dFlatTreeInterface->Fill_Fundamental<Float_t>("rfTime", locDeltaTRF);
 
-	if(showOutput){ cout << "Filled some fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled some fundamental branches" << endl; } 
 
         ++uniqueComboID;
         if (is_pi0eta){
@@ -5362,21 +5354,21 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("ptGT1", ptGT1);
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("ptLT05", ptLT05);
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("ptGT05LT1", ptGT05LT1);
-	if(showOutput){ cout << "Filled some more fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled some more fundamental branches" << endl; } 
 	
 	// some variables to track uniqueness
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("isNotRepeated_pi0",isNotRepeated_pi0);
-	if(showOutput){ cout << "Filled even more fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled even more fundamental branches" << endl; } 
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("isNotRepeated_eta",isNotRepeated_eta);
-	if(showOutput){ cout << "Filled even more fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled even more fundamental branches" << endl; } 
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("isNotRepeated_pi0eta",isNotRepeated_pi0eta);
-	if(showOutput){ cout << "Filled even more fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled even more fundamental branches" << endl; } 
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("isNotRepeated_eta_pi0eta",isNotRepeated_eta_pi0eta);
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("isNotRepeated_pi0_pi0eta",isNotRepeated_pi0_pi0eta);
         dFlatTreeInterface->Fill_Fundamental<ULong64_t>("spectroscopicComboID",spectroscopicComboID);
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("baseAsymCut",baseAsymCut);
         dFlatTreeInterface->Fill_Fundamental<Bool_t>("baseAsymCut_mDelta",baseAsymCut_mDelta);
-	if(showOutput){ cout << "Filled even more fundamental branches" << endl; } 
+	if(verbose){ cout << "Filled even more fundamental branches" << endl; } 
 
 	// some variables to show where the pi0/eta detected
         dFlatTreeInterface->Fill_Fundamental<Float_t>("pi0DetectedIn", pi0DetectedIn); //fundamental = char, int, float, double, etc.
@@ -5433,41 +5425,41 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         dFlatTreeInterface->Fill_Fundamental<Float_t>("photonE3",photonEnergies[2]);	
         dFlatTreeInterface->Fill_Fundamental<Float_t>("photonE4",photonEnergies[3]);	
 
-	if(showOutput){ cout << "Filled fundamental branches" <<endl; }
+	if(verbose){ cout << "Filled fundamental branches" <<endl; }
         //FILL FLAT TREE
         //dComboWrapper->Set_ComboIndex(loc_i);  // Combo succeeded // this might be redundant since this is after the continue command in the cut condition above, combo must have succeeded already. But Elton has it! 
         Fill_FlatTree(); //for the active combo
     } // end of combo loop
     ++eventIdx;
-    if(showOutput){cout << "\n\n **************** Finishing the combo loop ***************\n**********************************************************\n" << endl;}
+    if(verbose){cout << "\n\n **************** Finishing the combo loop ***************\n**********************************************************\n" << endl;}
 
 //    groupHists.fillHistograms();
 
-    if (locNumThrown!=0){
-    	Int_t nCombosPassed;
-    	double comboWeight;
-    	for ( const auto &currentPair : topologyMap ) {
-    	        //compositionFile << "Filling topologies with cut: " << currentPair.first << endl;
-    	        nCombosPassed = currentPair.second.size();
-    	        comboWeight = 1/nCombosPassed;
-    	        //compositionFile << "-Num combos passed cuts: " << nCombosPassed << endl;
-    	        for ( auto currentTopology : currentPair.second ) {
-    	                //compositionFile << "--Current topology: " << currentTopology.locThrownTopology << endl;
-    	                //compositionFile << "--Current composition: " << currentTopology.composition << endl;
-    	                compositionFile << currentTopology.locThrownTopology << " " << currentTopology.composition << " " <<
-    	                        count_totEvents << " " << currentTopology.beamProtonID << " " << currentTopology.spectroscopicID << " " << currentTopology.chiSq
-    	                        << " " << currentTopology.unusedEnergy << " " << currentTopology.nUnusedShowers
-    	                        << " " << currentTopology.pi0Mass << " " << currentTopology.etaMass  << " " << currentTopology.pi0etaMass
-    	                        << endl;
-    	        }
-    	}
-    }
+    //if (locNumThrown!=0){
+    //	Int_t nCombosPassed;
+    //	double comboWeight;
+    //	for ( const auto &currentPair : topologyMap ) {
+    //	        //compositionFile << "Filling topologies with cut: " << currentPair.first << endl;
+    //	        nCombosPassed = currentPair.second.size();
+    //	        comboWeight = 1/nCombosPassed;
+    //	        //compositionFile << "-Num combos passed cuts: " << nCombosPassed << endl;
+    //	        for ( auto currentTopology : currentPair.second ) {
+    //	                //compositionFile << "--Current topology: " << currentTopology.locThrownTopology << endl;
+    //	                //compositionFile << "--Current composition: " << currentTopology.composition << endl;
+    //	                compositionFile << currentTopology.locThrownTopology << " " << currentTopology.composition << " " <<
+    //	                        count_totEvents << " " << currentTopology.beamProtonID << " " << currentTopology.spectroscopicID << " " << currentTopology.chiSq
+    //	                        << " " << currentTopology.unusedEnergy << " " << currentTopology.nUnusedShowers
+    //	                        << " " << currentTopology.pi0Mass << " " << currentTopology.etaMass  << " " << currentTopology.pi0etaMass
+    //	                        << endl;
+    //	        }
+    //	}
+    //}
 
 
 
     //FILL HISTOGRAMS: Num combos / events surviving actions
     Fill_NumCombosSurvivedHists();
-    if(showOutput){ cout << "Fillied NumComboSurvivedHists" << endl; } 
+    if(verbose){ cout << "Fillied NumComboSurvivedHists" << endl; } 
 
     /******************************************* LOOP OVER THROWN DATA (OPTIONAL) ***************************************/
     /*
@@ -5534,25 +5526,24 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
     // Even though we have this Set_IsComboCut and continue, that only "continues" the combo loop. This is outside that loop so we have to loop over all the combos again and check to see if any of the combos have 
     // been cut. We only the fill the tree if at least one combo succeeded. If that happens it breaks the loop and begins to fill the output (if there is a file you want to fill it in. 
     Bool_t locIsEventCut = true;
-    if(showOutput) { cout << "Looping over through the comobs to check passed or not" << endl; } 
+    if(verbose) { cout << "Looping over through the comobs to check passed or not" << endl; } 
     for(UInt_t loc_i = 0; loc_i < Get_NumCombos(); ++loc_i) {
         //Set branch array indices for combo and all combo particles
         dComboWrapper->Set_ComboIndex(loc_i);
         // Is used to indicate when combos have been cut
         if(dComboWrapper->Get_IsComboCut()){
-    	    if(showOutput) { cout << "Combo did not pass cuts" << endl; } 
+    	    if(verbose) { cout << "Combo did not pass cuts" << endl; } 
             continue;
 	}
         locIsEventCut = false; // At least one combo succeeded                                                     
-        if(showOutput) { cout << "Combo passed cuts!"  << endl; } 
+        if(verbose) { cout << "Combo passed cuts!"  << endl; } 
         break;
     }
     if(!locIsEventCut && dOutputTreeFileName != ""){ 
-	    if (showOutput) {cout<<"Filling output tree" << endl; }
-	    Fill_OutputTree(); 
-
+	    if (verbose) {cout<<"Filling output tree" << endl; }
+            //Fill_OutputTree("delete");
+            Fill_OutputTree(); 
             //if (locPolarizationAngle==0)
-            //    Fill_OutputTree("deg000");
             //else if(locPolarizationAngle==45)
             //    Fill_OutputTree("deg045");
             //else if (locPolarizationAngle==90)
@@ -5573,26 +5564,26 @@ void DSelector_ver20::Finalize(void)
     //If you are using PROOF, this function is called on each thread,
     //so anything you do will not have the combined information from the various threads.
     //Besides, it is best-practice to do post-processing (e.g. fitting) separately, in case there is a problem.
-    if(showOutput){ std::cout << "Runs Included In Analysis:" << endl; }
+    if(verbose){ std::cout << "Runs Included In Analysis:" << endl; }
     for (std::set<UInt_t>::iterator it=usedRuns.begin(); it!=usedRuns.end(); ++it){
-        if (showOutput){ cout << *it << endl; }
+        if (verbose){ cout << *it << endl; }
     }
 
-    //if(showOutput){cout << "Num passed UnusedEnergy: " << std::to_string(count_UnusedEnergy)<<endl;}
-    //if(showOutput){cout << "Num passed CLKinFit: " << std::to_string(count_ChiSq)<<endl;}
-    //if(showOutput){cout << "Num passed DeltaTRF: " << std::to_string(count_DeltaTRF)<<endl;}
-    //if(showOutput){cout << "Num passed dij3pass: " << std::to_string(count_dij3pass)<<endl;}
-    //if(showOutput){cout << "Num passed PhotonE: " << std::to_string(count_PhotonE)<<endl;}
-    //if(showOutput){cout << "Num passed PhotonTheta: " << std::to_string(count_PhotonTheta)<<endl;}
-    //if(showOutput){cout << "Num passed MagP3Proton: " << std::to_string(count_MagP3Proton)<<endl;}
-    //if(showOutput){cout << "Num passed zCutmin: " << std::to_string(count_zCutmin)<<endl;}
-    //if(showOutput){cout << "Num passed RProton: " << std::to_string(count_RProton)<<endl;}
-    //if(showOutput){cout << "Num passed MissingMassSquared: " << std::to_string(count_MissingMassSquared)<<endl;}
-    //if(showOutput){cout << "Num passed dEdxCDCProton: " << std::to_string(count_dEdxCDCProton)<<endl;}
-    //if(showOutput){cout << "Num passed insideEllipse: " << std::to_string(count_insideEllipse)<<endl;}
-    //if(showOutput){cout << "The next two show how the numbers are reduced when doing uniqueness tracking" << endl;}
-    //if(showOutput){cout << "Num passed allGeneralCutsPassed: " << std::to_string(count_allGeneralCutsPassed)<<endl;}
-    ////if(showOutput){cout << "Num passed allGeneralCutsPassedPlusTracked: " << std::to_string(count_allGeneralCutsPassedPlusTracked)<<endl;}
+    //if(verbose){cout << "Num passed UnusedEnergy: " << std::to_string(count_UnusedEnergy)<<endl;}
+    //if(verbose){cout << "Num passed CLKinFit: " << std::to_string(count_ChiSq)<<endl;}
+    //if(verbose){cout << "Num passed DeltaTRF: " << std::to_string(count_DeltaTRF)<<endl;}
+    //if(verbose){cout << "Num passed dij3pass: " << std::to_string(count_dij3pass)<<endl;}
+    //if(verbose){cout << "Num passed PhotonE: " << std::to_string(count_PhotonE)<<endl;}
+    //if(verbose){cout << "Num passed PhotonTheta: " << std::to_string(count_PhotonTheta)<<endl;}
+    //if(verbose){cout << "Num passed MagP3Proton: " << std::to_string(count_MagP3Proton)<<endl;}
+    //if(verbose){cout << "Num passed zCutmin: " << std::to_string(count_zCutmin)<<endl;}
+    //if(verbose){cout << "Num passed RProton: " << std::to_string(count_RProton)<<endl;}
+    //if(verbose){cout << "Num passed MissingMassSquared: " << std::to_string(count_MissingMassSquared)<<endl;}
+    //if(verbose){cout << "Num passed dEdxCDCProton: " << std::to_string(count_dEdxCDCProton)<<endl;}
+    //if(verbose){cout << "Num passed insideEllipse: " << std::to_string(count_insideEllipse)<<endl;}
+    //if(verbose){cout << "The next two show how the numbers are reduced when doing uniqueness tracking" << endl;}
+    //if(verbose){cout << "Num passed allGeneralCutsPassed: " << std::to_string(count_allGeneralCutsPassed)<<endl;}
+    ////if(verbose){cout << "Num passed allGeneralCutsPassedPlusTracked: " << std::to_string(count_allGeneralCutsPassedPlusTracked)<<endl;}
 
     if(true){cout << "Count combos: " << std::to_string(count_combos) << endl;} 
     if(true){cout << "Count events: " << std::to_string(count_events) << endl;} 
@@ -5622,7 +5613,7 @@ void DSelector_ver20::Finalize(void)
     //dHist_Cuts->LabelsOption("v");
 
     //CALL THIS LAST
-    if(showOutput){cout << "finalizing!" << endl;}
+    if(verbose){cout << "finalizing!" << endl;}
     DSelector::Finalize(); //Saves results to the output file
 };
 

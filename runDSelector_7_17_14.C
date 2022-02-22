@@ -27,8 +27,8 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	//int proof_Nthreads = 50;
 
 	// open ROOT files and TTree
-	//TString nameOfTree = "pi0eta__B4_M17_M7_Tree"; 
-        TString nameOfTree = "pi0eta__B4_M7_M17_Tree";
+	TString nameOfTree = "pi0eta__B4_M17_M7_Tree"; 
+        //TString nameOfTree = "pi0eta__B4_M7_M17_Tree";
         //TString nameOfTree = "pi0eta__B4_Tree";
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
         //TString nameOfTree = "pi0eta__B4_M7_Tree";
@@ -66,18 +66,15 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/etapi0_flat_8GeVp_2017_Mpi0eta16to3/tree_pi0eta__B4_M17_M7.root");
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/etapi0_flat_8GeVp_2018_8_Mpi0eta16to3/tree_pi0eta__B4_M17_M7.root");
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/etapi0_flat_8GeVp_2018_1_Mpi0eta16to3/tree_pi0eta__B4_M17_M7.root");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
-        //
-        //Much larger flat MC
+        // slightly newer flat MC
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV_2018_8/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
+        //Much larger flat MC with matched t-slopes
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_pi0eta__B4_M17_M7_merged*");
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged11.root");
 
         // Testing tslope matching to data
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_tslope_matching/tslope1/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
 
-        //
         // Mass (un)constrained flat etapi0
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_massConstrained/trees/tree_*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_constrainedVsNonConstrained/unconstrained/trees/tree*");
@@ -125,13 +122,13 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 	// 2017 DATA
 	// allData
-	// This one contains the showerQuality variables
-	//chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2017-01/analysis-ver27/tree_pi0eta__B4_M17_M7/merged/*");
+	// DONT USE THIS ONE
+	/////// chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2017-01/analysis-ver27/tree_pi0eta__B4_M17_M7/merged/*");
         // ver52
 	//chain->Add("/d/grid17/ln16/rootFiles/pi0eta/RunPeriod-2017-01/analysis-ver52/tree_pi0eta__B4_M17_M7/merged/*");
 	// 2018 DATA
 	//chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-01/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/*");
-	//chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-08/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/tree_pi0eta__B4_M17_M7_*");
+	chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-08/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/*");
 
         // ********************* USING THIS FOR Q-values so far *********		
 	//chain->Add("/d/grid15/ln16/pi0eta/092419/boolSpectPi0EtaSelectedFiles/pi0eta_data_tree_DSelector.root");
@@ -140,7 +137,9 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         // ************* MALTE KMATRIX ********
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix/tree_pi0eta__B4_M7_M17*");
         // Newer K-matrix 10M events probably
-        chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix_10M_013022/trees/tree_pi0eta__B4_M7_M17_gen_amp_*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix_10M_013022/trees/tree_pi0eta__B4_M7_M17_gen_amp_*");
+        // Files above did not have associated thrown trees, these ones do but only 1M events
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/malte_kmatrix_1M_021322/trees/tree_pi0eta__B4_M7_M17_gen_amp_*");
 
         // *********** From mergeEvents.C, merging etapi and b1 events that prefer the 4g hypothesis
         //chain->Add("/d/grid17/ln16/mergingTrees/etapi_and_b1_as_4g.root");
@@ -150,6 +149,10 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/mergingTrees/b1_as_etapi/tree_pi0eta__B4_M17_M7.root");
 
 
+        // ********************** v2 Double Regge Event Select Systemtaics  ******************** 
+        // Ebeam selected
+        // No Ebeam selected
+        //chain->Add("/d/grid17/ln16/myDSelector/zBaseCuts/baseCuts_DR/noEBeamSelect/degALL_data_2018_1_looseDREventSelectSyst_tree_DSelector.root");
         // ********************** v2 base cuts - using Justin's vertex selections - looser photon theta - ******************** 
         //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_8_baseCuts_looseChiUE_tree_DSelector.root");
         // ********************** STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
@@ -172,7 +175,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	//chain->Add("/d/grid15/ln16/pi0eta/092419/zSelectedBaseCuts_2018_8/pi0eta_baseCuts_2018_tree_DSelector.root");
 	// 2018_1
 	//chain->Add("/d/grid15/ln16/pi0eta/092419/zSelectedBaseCuts_2018_1/pi0eta_baseCuts_2018_tree_DSelector.root");
-	//
+	
 	// BA for Double regge MC studies
 	// Rejection sampled the uniform phi distribution. 
 	//chain->Add("/d/grid15/ln16/hddm_filtered_root/zFiltered/fullRecon/tree_pi0eta__B4_M17_M7.root");
@@ -183,7 +186,10 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
         // vector pseudoscalar b1 simulations from justin
         //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
+        //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
         
+
+
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/etapi0_zlm_/trees/*"); 
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/matchingFlat2018_8/etapi0_zlm_d2/trees/*");
         
@@ -219,29 +225,24 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 
 	// should change the name below from data to reco when running over MC
 	string degAngle="degALL";
-        //string tag="_bkgndSample_mEllipse_8288_tLT1";
-        
-        string tag="_kmatrix_mEllipse_8288_tLT1_mVH";
 
-        //string tag="_flat_2017_mEllipse_mt_mDelta_mOmega_mEbeam";
-        //string tag="_flat_2017_mEllipse_mEbeam_mt";
+        //string tag="_bkgndSample_mEllipse_8288_tLT1";
+        //string tag="_flat_2018_8_v0_mEllipse_8288_t011_mVH_mDelta";
+        
+        //string tag="_b1_vectorps_as_etapi_BA";
+        //string tag="_b1_vps_as_etapi_stdProtonPhotonExclusivity_chi13_for_thesis";
         //string tag="_data_2018_1_mEllipse_mEbeam_mt_mDelta_mOmega";
         
         //string tag="_b1vps_as_4g_mEllipse_8288_tLT1_mVH";
-        //string tag="_flat_2018_8_mEllipse_8288_tLT1_mVH";
-
-        //string tag="_data_2017_BA";
-        //string tag="_data_2017_baseCuts_looseChiUE";
-        //string tag="_data_2017_mEllipse_8288_chi13_tLT1_pipicut_omegacut";
-        //string tag="_malte_kmatrix_2018_8_mEllipse_8288_tLT1_chi13_omegacut";//_mPhotonETheta_mDelta";
-        //string tag="_flat_2017_mEllipse_8288_tpLT1_chi13_omegacut_rfpeak";
-        //
-        //string tag="_b1_as_4g_all_mEllipse_8288_tLT1_chi13_omegacut";
-        //string tag="_etapi_as_4g_mEllipse_8288_tLT1_chi13_omegacut";
-        //string tag="_b1_as_4g_chiSqUEOnly";
-        //
-        //string tag="_flat_M7_2018_8_mEllipse_8288_tpLT1_chi13_omegacut_rfpeak";
-        //string tag="_malte_kmatrix_2018_8_mEllipse_8288_tLT1_chi13_omegacut";//_mPhotonETheta_mDelta";
+        //string tag="_data_2018_8_mEllipse_8288_tLT1_mVH";
+        
+        //string tag="_nonres_eff_test_zlm_d2_matchingFlat2018_8_mEllipse";
+        
+        //string tag="_flat_2017_noSelections_for_thesis";
+        //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
+        //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
+            
+        string tag="_data_2018_8_looseDREventSelectSyst";
         
 
 	//  ===== Section is for pulling in data by polarization for asymmetry ===== /////
