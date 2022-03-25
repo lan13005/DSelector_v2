@@ -48,7 +48,7 @@ string polarization="degALL";
 //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
 //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
     
-string tag="_data_2018_8_looseDREventSelectSyst";
+string tag="_data_2017_looseDREventSelectSyst";
 int mcprocess=0;
 
 void DSelector_ver20::Init(TTree *locTree)
@@ -4616,7 +4616,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
             ((photonThetas[2]>=1.5 && photonThetas[2]<=11) || photonThetas[2]>=11.4)*
             ((photonThetas[3]>=1.5 && photonThetas[3]<=11) || photonThetas[3]>=11.4)*
             (locMagP3Proton>0.3)*(locdzProton>50)*(locdzProton<80)* //(abs(locMissingMassSquared)<0.1)* // REMOVE MMSQ, <0.1 BASICALLY DOES NOTHING
-            pPhotonE*pdEdxCDCProton*pMpi0etaDoubleRegge*pBeamE82to88; // last line contains unchanged selections
+            pPhotonE*pdEdxCDCProton*pMpi0etaDoubleRegge*pBeamE82to88* // last line contains unchanged selections
+            ((mandelstam_tpi0<1.0)||(mandelstam_teta<1.0));
 	/////////////////////// 
 	looseCutsUEChiSq = baseCuts_mChiUE*chiSq100*pLooseUnusedEnergy;
         kinematicSelected_looseCutsUEChiSq = ptpLT1*!pMPi0P14*pBeamE8GeVPlus*looseCutsUEChiSq;

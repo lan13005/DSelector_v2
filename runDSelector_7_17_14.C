@@ -128,7 +128,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	//chain->Add("/d/grid17/ln16/rootFiles/pi0eta/RunPeriod-2017-01/analysis-ver52/tree_pi0eta__B4_M17_M7/merged/*");
 	// 2018 DATA
 	//chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-01/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/*");
-	chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-08/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/*");
+	//chain->Add("/d/home/sdobbs/GlueX/gluex_data/RunPeriod-2018-08/analysis-ver02/tree_pi0eta__B4_M17_M7/merged/*");
 
         // ********************* USING THIS FOR Q-values so far *********		
 	//chain->Add("/d/grid15/ln16/pi0eta/092419/boolSpectPi0EtaSelectedFiles/pi0eta_data_tree_DSelector.root");
@@ -149,6 +149,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/mergingTrees/b1_as_etapi/tree_pi0eta__B4_M17_M7.root");
 
 
+        chain->Add("/d/grid17/ln16/myDSelector/zDR_BA/baseCuts_DR/degALL_data_2017_looseDREventSelectSyst_tree_DSelector.root");
         // ********************** v2 Double Regge Event Select Systemtaics  ******************** 
         // Ebeam selected
         // No Ebeam selected
@@ -242,7 +243,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
         //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
             
-        string tag="_data_2018_8_looseDREventSelectSyst";
+        string tag="_data_2017_looseDREventSelectSyst";
         
 
 	//  ===== Section is for pulling in data by polarization for asymmetry ===== /////
