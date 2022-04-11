@@ -111,48 +111,48 @@ void fitAsymmetryPlots(){
         {"_evtSel_ueL2", {make_pair(0,criteria{"unusedEnergy",fltmin,0.40,fltmin,fltmin})} },
         {"_evtSel_chiT", {make_pair(1,criteria{"chiSq",fltmin,12,fltmin,fltmin})} },
         {"_evtSel_chiL", {make_pair(1,criteria{"chiSq",fltmin,24,fltmin,fltmin})} },
-//        {"_evtSel_gThetaBeamL", {   
-//                                make_pair(2,criteria{"photonTheta1",2.0,10.3,11.9,fltmax}),
-//                                make_pair(3,criteria{"photonTheta2",2.0,10.3,11.9,fltmax}),
-//                                make_pair(4,criteria{"photonTheta3",2.0,10.3,11.9,fltmax}),
-//                                make_pair(5,criteria{"photonTheta4",2.0,10.3,11.9,fltmax}),
-//                            } },
-//        {"_evtSel_gThetaBeamT", {
-//                                make_pair(2,criteria{"photonTheta1",3.0,10.3,11.9,fltmax}),
-//                                make_pair(3,criteria{"photonTheta2",3.0,10.3,11.9,fltmax}),
-//                                make_pair(4,criteria{"photonTheta3",3.0,10.3,11.9,fltmax}),
-//                                make_pair(5,criteria{"photonTheta4",3.0,10.3,11.9,fltmax}),
-//                            } },
-//        {"_evtSel_gThetaTransL", {  
-//                                make_pair(2,criteria{"photonTheta1",2.5,11.4,11.4,fltmax}),
-//                                make_pair(3,criteria{"photonTheta2",2.5,11.4,11.4,fltmax}),
-//                                make_pair(4,criteria{"photonTheta3",2.5,11.4,11.4,fltmax}),
-//                                make_pair(5,criteria{"photonTheta4",2.5,11.4,11.4,fltmax}),
-//                            } },
-//        {"_evtSel_gThetaTransT", {
-//                                make_pair(2,criteria{"photonTheta1",2.5,10.0,12.5,fltmax}),
-//                                make_pair(3,criteria{"photonTheta2",2.5,10.0,12.5,fltmax}),
-//                                make_pair(4,criteria{"photonTheta3",2.5,10.0,12.5,fltmax}),
-//                                make_pair(5,criteria{"photonTheta4",2.5,10.0,12.5,fltmax}),
-//                            } },
-//        {"_evtSel_gET1", {
-//                                make_pair(6,criteria{"photonE1",0.12,fltmax,fltmin,fltmin}),
-//                                make_pair(7,criteria{"photonE2",0.12,fltmax,fltmin,fltmin}),
-//                                make_pair(8,criteria{"photonE3",0.12,fltmax,fltmin,fltmin}),
-//                                make_pair(9,criteria{"photonE4",0.12,fltmax,fltmin,fltmin}),
-//                            } },
-//        {"_evtSel_gET2", {
-//                                make_pair(6,criteria{"photonE1",0.13,fltmax,fltmin,fltmin}),
-//                                make_pair(7,criteria{"photonE2",0.13,fltmax,fltmin,fltmin}),
-//                                make_pair(8,criteria{"photonE3",0.13,fltmax,fltmin,fltmin}),
-//                                make_pair(9,criteria{"photonE4",0.13,fltmax,fltmin,fltmin}),
-//                            } },
+        {"_evtSel_gThetaBeamL", {   
+                                make_pair(2,criteria{"photonTheta1",2.0,10.3,11.9,fltmax}),
+                                make_pair(3,criteria{"photonTheta2",2.0,10.3,11.9,fltmax}),
+                                make_pair(4,criteria{"photonTheta3",2.0,10.3,11.9,fltmax}),
+                                make_pair(5,criteria{"photonTheta4",2.0,10.3,11.9,fltmax}),
+                            } },
+        {"_evtSel_gThetaBeamT", {
+                                make_pair(2,criteria{"photonTheta1",3.0,10.3,11.9,fltmax}),
+                                make_pair(3,criteria{"photonTheta2",3.0,10.3,11.9,fltmax}),
+                                make_pair(4,criteria{"photonTheta3",3.0,10.3,11.9,fltmax}),
+                                make_pair(5,criteria{"photonTheta4",3.0,10.3,11.9,fltmax}),
+                            } },
+        {"_evtSel_gThetaTransL", {  
+                                make_pair(2,criteria{"photonTheta1",2.5,11.4,11.4,fltmax}),
+                                make_pair(3,criteria{"photonTheta2",2.5,11.4,11.4,fltmax}),
+                                make_pair(4,criteria{"photonTheta3",2.5,11.4,11.4,fltmax}),
+                                make_pair(5,criteria{"photonTheta4",2.5,11.4,11.4,fltmax}),
+                            } },
+        {"_evtSel_gThetaTransT", {
+                                make_pair(2,criteria{"photonTheta1",2.5,10.0,12.5,fltmax}),
+                                make_pair(3,criteria{"photonTheta2",2.5,10.0,12.5,fltmax}),
+                                make_pair(4,criteria{"photonTheta3",2.5,10.0,12.5,fltmax}),
+                                make_pair(5,criteria{"photonTheta4",2.5,10.0,12.5,fltmax}),
+                            } },
+        {"_evtSel_gET1", {
+                                make_pair(6,criteria{"photonE1",0.12,fltmax,fltmin,fltmin}),
+                                make_pair(7,criteria{"photonE2",0.12,fltmax,fltmin,fltmin}),
+                                make_pair(8,criteria{"photonE3",0.12,fltmax,fltmin,fltmin}),
+                                make_pair(9,criteria{"photonE4",0.12,fltmax,fltmin,fltmin}),
+                            } },
+        {"_evtSel_gET2", {
+                                make_pair(6,criteria{"photonE1",0.13,fltmax,fltmin,fltmin}),
+                                make_pair(7,criteria{"photonE2",0.13,fltmax,fltmin,fltmin}),
+                                make_pair(8,criteria{"photonE3",0.13,fltmax,fltmin,fltmin}),
+                                make_pair(9,criteria{"photonE4",0.13,fltmax,fltmin,fltmin}),
+                            } },
         {"_evtSel_pMomT1", {make_pair(10,criteria{"proton_momentum",0.35,fltmax,fltmin,fltmin})} },
         {"_evtSel_pMomT2", {make_pair(10,criteria{"proton_momentum",0.40,fltmax,fltmin,fltmin})} },
-//        {"_evtSel_pZL", {make_pair(11,criteria{"proton_z",50,80,fltmin,fltmin})} },
-//        {"_evtSel_pZT", {make_pair(11,criteria{"proton_z",54,76,fltmin,fltmin})} },
-//        {"_evtSel_mmsqT1", {make_pair(12,criteria{"mmsq",-0.025,0.025,fltmin,fltmin})} },
-//        {"_evtSel_mmsqT2", {make_pair(12,criteria{"mmsq",-0.020,0.020,fltmin,fltmin})} },
+        {"_evtSel_pZL", {make_pair(11,criteria{"proton_z",50,80,fltmin,fltmin})} },
+        {"_evtSel_pZT", {make_pair(11,criteria{"proton_z",54,76,fltmin,fltmin})} },
+        {"_evtSel_mmsqT1", {make_pair(12,criteria{"mmsq",-0.025,0.025,fltmin,fltmin})} },
+        {"_evtSel_mmsqT2", {make_pair(12,criteria{"mmsq",-0.020,0.020,fltmin,fltmin})} },
     };
 
     /////////////////////
@@ -336,6 +336,14 @@ void constructAndFit(
             total_entries+=weight;
 
             selected=true;
+            // These skip bools will be used to skip filling (and fitting since we have a min entry requirement) depending
+            //    on the variable we are binning in (the first vector in vector<criteria> selections)
+            bool skipPi0Hists=false; 
+            bool skipEtaHists=false;
+            if (selections[0].variable=="Mpi0p")
+                skipPi0Hists=true;
+            if (selections[0].variable=="Metap")
+                skipEtaHists=true;
             for (auto selection: selections){
                 selectionVariable=array_variable_map[dataSetTag[iData]+"_"+selection.variable][ientry]; 
                 if(selectionVariable<=0.0){
@@ -355,33 +363,33 @@ void constructAndFit(
                 itpi0=int(ceil(tpi0/(1.0/nt1bins))-1);   
 
                 if(BeamAngle==0){
-                    if (iteta<nt1bins)
+                    if ((iteta<nt1bins)*!skipEtaHists)
                         phi000_eta[iData][iteta]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_eta_lab"][ientry],weight); 
-                    if (itpi0<nt1bins)
+                    if ((itpi0<nt1bins)*!skipPi0Hists)
                         phi000_pi0[iData][itpi0]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_pi0_lab"][ientry],weight); 
                 }
                 else if(BeamAngle==45){
-                    if (iteta<nt1bins)
+                    if ((iteta<nt1bins)*!skipEtaHists)
                         phi045_eta[iData][iteta]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_eta_lab"][ientry],weight); 
-                    if (itpi0<nt1bins)
+                    if ((itpi0<nt1bins)*!skipPi0Hists)
                         phi045_pi0[iData][itpi0]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_pi0_lab"][ientry],weight); 
                 }
                 else if(BeamAngle==90){
-                    if (iteta<nt1bins)
+                    if ((iteta<nt1bins)*!skipEtaHists)
                         phi090_eta[iData][iteta]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_eta_lab"][ientry],weight); 
-                    if (itpi0<nt1bins)
+                    if ((itpi0<nt1bins)*!skipPi0Hists)
                         phi090_pi0[iData][itpi0]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_pi0_lab"][ientry],weight); 
                 }
                 else if(BeamAngle==135){
-                    if (iteta<nt1bins)
+                    if ((iteta<nt1bins)*!skipEtaHists)
                         phi135_eta[iData][iteta]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_eta_lab"][ientry],weight); 
-                    if (itpi0<nt1bins)
+                    if ((itpi0<nt1bins)*!skipPi0Hists)
                         phi135_pi0[iData][itpi0]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_pi0_lab"][ientry],weight); 
                 }
                 else if(BeamAngle==-1){
-                    if (iteta<nt1bins)
+                    if ((iteta<nt1bins)*!skipEtaHists)
                         phiAMO_eta[iData][iteta]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_eta_lab"][ientry],weight); 
-                    if (itpi0<nt1bins)
+                    if ((itpi0<nt1bins)*!skipPi0Hists)
                         phiAMO_pi0[iData][itpi0]->Fill(array_variable_map[dataSetTag[iData]+"_"+"phi_pi0_lab"][ientry],weight); 
                 }
                 total_selected+=weight;
@@ -399,16 +407,16 @@ void constructAndFit(
     // SCALE THE HISTOGRAMS BY FLUX RATIO
     //////////////////////////////////////
     for (int it1bin=0; it1bin<nt1bins; ++it1bin){
-        phi000_eta[3][it1bin] = new TH1F(("total_phi000_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi045_eta[3][it1bin] = new TH1F(("total_phi045_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180); 
-        phi090_eta[3][it1bin] = new TH1F(("total_phi090_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi135_eta[3][it1bin] = new TH1F(("total_phi135_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phiAMO_eta[3][it1bin] = new TH1F(("total_phiAMO_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi000_pi0[3][it1bin] = new TH1F(("total_phi000_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi045_pi0[3][it1bin] = new TH1F(("total_phi045_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi090_pi0[3][it1bin] = new TH1F(("total_phi090_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phi135_pi0[3][it1bin] = new TH1F(("total_phi135_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
-        phiAMO_pi0[3][it1bin] = new TH1F(("total_phiAMO_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", 30, -180, 180);
+        phi000_eta[3][it1bin] = new TH1F(("total_phi000_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi045_eta[3][it1bin] = new TH1F(("total_phi045_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi); 
+        phi090_eta[3][it1bin] = new TH1F(("total_phi090_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi135_eta[3][it1bin] = new TH1F(("total_phi135_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phiAMO_eta[3][it1bin] = new TH1F(("total_phiAMO_eta"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi000_pi0[3][it1bin] = new TH1F(("total_phi000_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi045_pi0[3][it1bin] = new TH1F(("total_phi045_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi090_pi0[3][it1bin] = new TH1F(("total_phi090_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phi135_pi0[3][it1bin] = new TH1F(("total_phi135_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
+        phiAMO_pi0[3][it1bin] = new TH1F(("total_phiAMO_pi0"+to_string(it1bin)).c_str(),";#phi; Entries / 9 degrees", nphi, minphi, maxphi);
 
         for (int iData=0; iData<nDataSets; ++iData){
             // First we scale all the para orientations with the flux ratios
@@ -535,13 +543,14 @@ void constructAndFit(
                 for (int i=0; i<maxiter; i++){
                     fit_asym->SetParameter(2,gRandom->Uniform()-0.5);
                     fitPointer = asymmetry000_090_eta->Fit(fit_asym,fitOption.c_str());
-                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1) )
+                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))//*(abs(fit_asym->GetParError(2))<1) )
                         break;
                     else{
-                        if (verbose) {cout << "  Attempt " << i+1 << " failed for asym 0/90 eta..." << endl;}
+                        if (verbose){ cout << "  Attempt " << i+1 << " failed for asym 0/90 eta... status, asym, asymerr: " << 
+                            (int)fitPointer << ", " << fit_asym->GetParameter(2) << ", " << abs(fit_asym->GetParError(2)) << endl;}
                     }
                 }
-                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1)) ){
+                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))){//*(abs(fit_asym->GetParError(2))<1)) ){
                     if (verbose) cout << "Asym fit 0/90 for eta was not successful after maxiter=" << maxiter << " times! exiting..." << endl;
                     exit(1);
                 }
@@ -570,13 +579,14 @@ void constructAndFit(
                 for (int i=0; i<maxiter; i++){
                     fit_asym->SetParameter(2,gRandom->Uniform()-0.5);
                     fitPointer = asymmetry045_135_eta->Fit(fit_asym,fitOption.c_str());
-                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1) )
+                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))//*(abs(fit_asym->GetParError(2))<1) )
                         break;
                     else{
-                        if (verbose){ cout << "  Attempt " << i+1 << " failed for asym 45/-45 eta..." << endl;}
+                        if (verbose){ cout << "  Attempt " << i+1 << " failed for asym 45/-45 eta... status, asym, asymerr: " << 
+                            (int)fitPointer << ", " << fit_asym->GetParameter(2) << ", " << abs(fit_asym->GetParError(2)) << endl;}
                     }
                 }
-                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1)) ){
+                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))){//*(abs(fit_asym->GetParError(2))<1)) ){
                     if (verbose) cout << "Asym fit 45/-45 for eta was not successful after maxiter=" << maxiter << " times! exiting..." << endl;
                     exit(1);
                 }
@@ -668,13 +678,14 @@ void constructAndFit(
                 for (int i=0; i<maxiter; i++){
                     fit_asym->SetParameter(2,gRandom->Uniform()-0.5);
                     fitPointer = asymmetry000_090_pi0->Fit(fit_asym,fitOption.c_str());
-                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1) )
+                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))//*(abs(fit_asym->GetParError(2))<1) )
                         break;
                     else{
-                        if (verbose) cout << "  Attempt " << i+1 << " failed for asym 0/90 pi0..." << endl;
+                        if (verbose){ cout << "  Attempt " << i+1 << " failed for asym 0/90 pi0... status, asym, asymerr: " << 
+                            (int)fitPointer << ", " << fit_asym->GetParameter(2) << ", " << abs(fit_asym->GetParError(2)) << endl;}
                     }
                 }
-                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1)) ){
+                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))){//*(abs(fit_asym->GetParError(2))<1)) ){
                     if (verbose) cout << "Asym fit 0/90 for pi0 was not successful after maxiter=" << maxiter << " times! exiting..." << endl;
                     exit(1);
                 }
@@ -703,13 +714,14 @@ void constructAndFit(
                 for (int i=0; i<maxiter; i++){
                     fit_asym->SetParameter(2,gRandom->Uniform()-0.5);
                     fitPointer = asymmetry045_135_pi0->Fit(fit_asym,fitOption.c_str());
-                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1) )
+                    if ( ((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))//*(abs(fit_asym->GetParError(2))<1) )
                         break;
                     else{
-                        if (verbose) cout << "  Attempt " << i+1 << " failed for asym 45/-45 eta..." << endl;
+                        if (verbose){ cout << "  Attempt " << i+1 << " failed for asym -45/45 pi0... status, asym, asymerr: " << 
+                            (int)fitPointer << ", " << fit_asym->GetParameter(2) << ", " << abs(fit_asym->GetParError(2)) << endl;}
                     }
                 }
-                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1)) ){
+                if ( !(((int)fitPointer==0)*(fit_asym->GetParameter(2)!=1))){//*(abs(fit_asym->GetParError(2))<1)) ){
                     if (verbose) cout << "Asym fit 45/-45 for pi0 was not successful after maxiter=" << maxiter << " times! exiting..." << endl;
                     exit(1);
                 }
@@ -1294,8 +1306,10 @@ map<string, float> extractAsymmetries(
         gSystem->Exec(("mkdir -p "+fitFolder).c_str());
         //float minMpi0eta[5] = {1.65, 1.9, 2.15, 2.4, 2.65};
         //float maxMpi0eta[5] = {1.9, 2.15, 2.4, 2.65, 2.9};
-        float minMpi0eta[7] = {1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8};
-        float maxMpi0eta[7] = {1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
+        //float minMpi0eta[7] = {1.6, 1.8, 2.0, 2.2, 2.4, 2.6, 2.8};
+        //float maxMpi0eta[7] = {1.8, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0};
+        float minMpi0eta[3] = {1.6, 2.1, 2.6};
+        float maxMpi0eta[3] = {2.1, 2.6, 3.1};
         for(int it=0; it<7; ++it){
             vector<criteria> selections={
                 {"Mpi0eta",minMpi0eta[it],maxMpi0eta[it],fltmin,fltmin},
