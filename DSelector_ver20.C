@@ -32,7 +32,7 @@ string topologyString="";
 
 string selectDetector="ALL";
 string polarization="degALL";
-//string tag="_bkgndSample_mEllipse_8288_tLT1";
+string tag="_bkgndSample_mEllipse_8288_tLT1";
 //string tag="_flat_2018_8_v0_mEllipse_8288_t011_mVH_mDelta";
 
 //string tag="_b1_vectorps_as_etapi_BA";
@@ -48,7 +48,7 @@ string polarization="degALL";
 //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
 //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
     
-string tag="_data_2017_looseDREventSelectSyst";
+//string tag="_data_2017_looseDREventSelectSyst";
 int mcprocess=0;
 
 void DSelector_ver20::Init(TTree *locTree)
@@ -5134,7 +5134,7 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //cout << "(BEFORE) base, inBox, inRF, AccWeight, weightBS: " << mEllipse_pre << ", " << inBox_noOtherCuts[4] << ", " << pDeltaTRF << ", " << weightAS << ", " << weightBS << endl;
         //cout << "RFtime: " << locDeltaTRF << endl;
         //if(!detectorCut){
-        //if (!mEllipse_pre || !detectorCut){
+        if (!mEllipse_pre || !detectorCut){
         //if (!((locChiSqKinFit<13.277)*(pUnusedEnergy)) || !detectorCut){
         //if (inBox_noOtherCuts[4]*pDeltaTRF || inBox_noOtherCuts[9]){ //[DATA SIDEBANDS] -  4 is signal region, 9 would be the skip regions (weight=0)
         //if (!(inBox[4]*pDeltaTRF) || !detectorCut){ // [DATA SIGNAL]
@@ -5149,8 +5149,8 @@ Bool_t DSelector_ver20::Process(Long64_t locEntry)
         //if (!mEllipseLooseUEChiSq_pre || !detectorCut)
 	//if (!allGeneralCutsSinglePolarization || !detectorCut) // For Matt's amptools studies
         //if (false){
-        if (!baseCuts || !detectorCut){
-	    if (verbose) { cout << "Did not pass cut, moving on.... " << endl; }  
+        //if (!baseCuts || !detectorCut){
+	//    if (verbose) { cout << "Did not pass cut, moving on.... " << endl; }  
             dComboWrapper->Set_IsComboCut(true); continue; 
         }
 

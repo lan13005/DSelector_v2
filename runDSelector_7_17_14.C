@@ -69,7 +69,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         // slightly newer flat MC
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/etapi_flat_8to9GeV_2018_8/trees/tree_pi0eta__B4_M17_M7_gen_amp*");
         //Much larger flat MC with matched t-slopes
-        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
+        //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2017_1_130M/merged/tree_pi0eta__B4_M17_M7_merged*");
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/120921/2018_8_260M/merged/tree_pi0eta__B4_M17_M7_merged*");
 
         // Testing tslope matching to data
@@ -149,14 +149,14 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid17/ln16/mergingTrees/b1_as_etapi/tree_pi0eta__B4_M17_M7.root");
 
 
-        chain->Add("/d/grid17/ln16/myDSelector/zDR_BA/baseCuts_DR/degALL_data_2017_looseDREventSelectSyst_tree_DSelector.root");
         // ********************** v2 Double Regge Event Select Systemtaics  ******************** 
-        // Ebeam selected
+        // Ebeam selected ( I think the line below corresponds to Ebeam selected 2017 )
+        // chain->Add("/d/grid17/ln16/myDSelector/zDR_BA/baseCuts_DR/degALL_data_2017_looseDREventSelectSyst_tree_DSelector.root");
         // No Ebeam selected
         //chain->Add("/d/grid17/ln16/myDSelector/zBaseCuts/baseCuts_DR/noEBeamSelect/degALL_data_2018_1_looseDREventSelectSyst_tree_DSelector.root");
         // ********************** v2 base cuts - using Justin's vertex selections - looser photon theta - ******************** 
         //chain->Add("./zBaseCuts/baseCuts_with_looseChiUE_v2/degALL_data_2018_8_baseCuts_looseChiUE_tree_DSelector.root");
-        // ********************** STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
+        // ********************** THESIS STD PROTON/PHOTON/EXCLUSIVITY LOOSE CHI CUTS ********************
         //chain->Add("./zThesisCuts/degALL_data_2017_stdProtonPhotonExclusivity_looseChi_for_thesis_tree_DSelector.root");
         
         
@@ -186,9 +186,9 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //chain->Add("/d/grid15/ln16/rootFiles/pi0eta/seansBkgMC/runAll/flat_etapi/degALL_mEllipse_8288_chi13_tpLT05_pipicut_omegacut_tree_DSelector.root");
 
         // vector pseudoscalar b1 simulations from justin
-        //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
-        //chain->Add("/d/grid17/ln16/b1_vps/selectedTrees/trees/degALL_recon_as_etapi_*");
-        
+        //chain->Add("/d/grid17/ln16/b1_vps/selectedTree_2017_1/trees/degALL_recon_as_etapi_*");
+        //chain->Add("/d/grid17/ln16/b1_vps/selectedTree_2018_1/trees/degALL_recon_as_etapi_*");
+        chain->Add("/d/grid17/ln16/b1_vps/selectedTree_2018_8/trees/degALL_recon_as_etapi_*");
 
 
         //chain->Add("/d/grid17/ln16/rootFiles/pi0eta/010820/nonres_eff_tests/etapi0_zlm_/trees/*"); 
@@ -227,7 +227,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
 	// should change the name below from data to reco when running over MC
 	string degAngle="degALL";
 
-        //string tag="_bkgndSample_mEllipse_8288_tLT1";
+        string tag="_bkgndSample_mEllipse_8288_tLT1";
         //string tag="_flat_2018_8_v0_mEllipse_8288_t011_mVH_mDelta";
         
         //string tag="_b1_vectorps_as_etapi_BA";
@@ -243,7 +243,7 @@ void runDSelector_7_17_14(bool useproof = 1, string path = "")
         //string tag="_flat_2017_stdProtonPhoton_looseChi_for_thesis";
         //string tag="_flat_2017_stdProtonPhotonExclusivity_chi13_for_thesis";
             
-        string tag="_data_2017_looseDREventSelectSyst";
+        //string tag="_data_2017_looseDREventSelectSyst";
         
 
 	//  ===== Section is for pulling in data by polarization for asymmetry ===== /////

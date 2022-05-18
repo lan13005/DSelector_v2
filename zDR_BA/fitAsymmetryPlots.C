@@ -81,7 +81,7 @@ float eta_std=0.0123;
 //float eta_peak=0.548625;
 //float eta_std=0.0191;
 
-void fitAsymmetryPlots(){
+void fitAsymmetryPlots(int single){
     map<string, float> percentages;
     vector< vector<float> > sbRegions = {
         //{3.0, 1.0, 2.0, 3.0, 1.0, 2.0}, // OLD PWA WIDTHS
@@ -100,60 +100,60 @@ void fitAsymmetryPlots(){
     //   where the "defaultSelections" are applied to the event selection variables. This is available for all systematic studies
     //   but is particually useful for this one where we are varying the selections. It does appear to work
     /////////////////////
-    vector<string> sbTags={"_ASBS"}; 
-    string weightVar="weightASBS"; // Will not overwrite AccWeight if "AccWeight" else overwrite weightVar with AccWeight*weightBS
-    showSummary=true;
-
-    // L=Looser, T=tighter bounds
-    eventSelects={
-        {"default", {make_pair(0,criteria{"default",0,0,0,0})} }, // Including a default where we do not make any selection modifications to the default
-        {"_evtSel_ueL1", {make_pair(0,criteria{"unusedEnergy",fltmin,0.25,fltmin,fltmin})} },
-        {"_evtSel_ueL2", {make_pair(0,criteria{"unusedEnergy",fltmin,0.40,fltmin,fltmin})} },
-        {"_evtSel_chiT", {make_pair(1,criteria{"chiSq",fltmin,12,fltmin,fltmin})} },
-        {"_evtSel_chiL", {make_pair(1,criteria{"chiSq",fltmin,24,fltmin,fltmin})} },
-        {"_evtSel_gThetaBeamL", {   
-                                make_pair(2,criteria{"photonTheta1",2.0,10.3,11.9,fltmax}),
-                                make_pair(3,criteria{"photonTheta2",2.0,10.3,11.9,fltmax}),
-                                make_pair(4,criteria{"photonTheta3",2.0,10.3,11.9,fltmax}),
-                                make_pair(5,criteria{"photonTheta4",2.0,10.3,11.9,fltmax}),
-                            } },
-        {"_evtSel_gThetaBeamT", {
-                                make_pair(2,criteria{"photonTheta1",3.0,10.3,11.9,fltmax}),
-                                make_pair(3,criteria{"photonTheta2",3.0,10.3,11.9,fltmax}),
-                                make_pair(4,criteria{"photonTheta3",3.0,10.3,11.9,fltmax}),
-                                make_pair(5,criteria{"photonTheta4",3.0,10.3,11.9,fltmax}),
-                            } },
-        {"_evtSel_gThetaTransL", {  
-                                make_pair(2,criteria{"photonTheta1",2.5,11.4,11.4,fltmax}),
-                                make_pair(3,criteria{"photonTheta2",2.5,11.4,11.4,fltmax}),
-                                make_pair(4,criteria{"photonTheta3",2.5,11.4,11.4,fltmax}),
-                                make_pair(5,criteria{"photonTheta4",2.5,11.4,11.4,fltmax}),
-                            } },
-        {"_evtSel_gThetaTransT", {
-                                make_pair(2,criteria{"photonTheta1",2.5,10.0,12.5,fltmax}),
-                                make_pair(3,criteria{"photonTheta2",2.5,10.0,12.5,fltmax}),
-                                make_pair(4,criteria{"photonTheta3",2.5,10.0,12.5,fltmax}),
-                                make_pair(5,criteria{"photonTheta4",2.5,10.0,12.5,fltmax}),
-                            } },
-        {"_evtSel_gET1", {
-                                make_pair(6,criteria{"photonE1",0.12,fltmax,fltmin,fltmin}),
-                                make_pair(7,criteria{"photonE2",0.12,fltmax,fltmin,fltmin}),
-                                make_pair(8,criteria{"photonE3",0.12,fltmax,fltmin,fltmin}),
-                                make_pair(9,criteria{"photonE4",0.12,fltmax,fltmin,fltmin}),
-                            } },
-        {"_evtSel_gET2", {
-                                make_pair(6,criteria{"photonE1",0.13,fltmax,fltmin,fltmin}),
-                                make_pair(7,criteria{"photonE2",0.13,fltmax,fltmin,fltmin}),
-                                make_pair(8,criteria{"photonE3",0.13,fltmax,fltmin,fltmin}),
-                                make_pair(9,criteria{"photonE4",0.13,fltmax,fltmin,fltmin}),
-                            } },
-        {"_evtSel_pMomT1", {make_pair(10,criteria{"proton_momentum",0.35,fltmax,fltmin,fltmin})} },
-        {"_evtSel_pMomT2", {make_pair(10,criteria{"proton_momentum",0.40,fltmax,fltmin,fltmin})} },
-        {"_evtSel_pZL", {make_pair(11,criteria{"proton_z",50,80,fltmin,fltmin})} },
-        {"_evtSel_pZT", {make_pair(11,criteria{"proton_z",54,76,fltmin,fltmin})} },
-        {"_evtSel_mmsqT1", {make_pair(12,criteria{"mmsq",-0.025,0.025,fltmin,fltmin})} },
-        {"_evtSel_mmsqT2", {make_pair(12,criteria{"mmsq",-0.020,0.020,fltmin,fltmin})} },
-    };
+//    vector<string> sbTags={"_ASBS"}; 
+//    string weightVar="weightASBS"; // Will not overwrite AccWeight if "AccWeight" else overwrite weightVar with AccWeight*weightBS
+//    showSummary=true;
+//
+//    // L=Looser, T=tighter bounds
+//    eventSelects={
+//        {"default", {make_pair(0,criteria{"default",0,0,0,0})} }, // Including a default where we do not make any selection modifications to the default
+//        {"_evtSel_ueL1", {make_pair(0,criteria{"unusedEnergy",fltmin,0.25,fltmin,fltmin})} },
+//        {"_evtSel_ueL2", {make_pair(0,criteria{"unusedEnergy",fltmin,0.40,fltmin,fltmin})} },
+//        {"_evtSel_chiT", {make_pair(1,criteria{"chiSq",fltmin,12,fltmin,fltmin})} },
+//        {"_evtSel_chiL", {make_pair(1,criteria{"chiSq",fltmin,24,fltmin,fltmin})} },
+//        {"_evtSel_gThetaBeamL", {   
+//                                make_pair(2,criteria{"photonTheta1",2.0,10.3,11.9,fltmax}),
+//                                make_pair(3,criteria{"photonTheta2",2.0,10.3,11.9,fltmax}),
+//                                make_pair(4,criteria{"photonTheta3",2.0,10.3,11.9,fltmax}),
+//                                make_pair(5,criteria{"photonTheta4",2.0,10.3,11.9,fltmax}),
+//                            } },
+//        {"_evtSel_gThetaBeamT", {
+//                                make_pair(2,criteria{"photonTheta1",3.0,10.3,11.9,fltmax}),
+//                                make_pair(3,criteria{"photonTheta2",3.0,10.3,11.9,fltmax}),
+//                                make_pair(4,criteria{"photonTheta3",3.0,10.3,11.9,fltmax}),
+//                                make_pair(5,criteria{"photonTheta4",3.0,10.3,11.9,fltmax}),
+//                            } },
+//        {"_evtSel_gThetaTransL", {  
+//                                make_pair(2,criteria{"photonTheta1",2.5,11.4,11.4,fltmax}),
+//                                make_pair(3,criteria{"photonTheta2",2.5,11.4,11.4,fltmax}),
+//                                make_pair(4,criteria{"photonTheta3",2.5,11.4,11.4,fltmax}),
+//                                make_pair(5,criteria{"photonTheta4",2.5,11.4,11.4,fltmax}),
+//                            } },
+//        {"_evtSel_gThetaTransT", {
+//                                make_pair(2,criteria{"photonTheta1",2.5,10.0,12.5,fltmax}),
+//                                make_pair(3,criteria{"photonTheta2",2.5,10.0,12.5,fltmax}),
+//                                make_pair(4,criteria{"photonTheta3",2.5,10.0,12.5,fltmax}),
+//                                make_pair(5,criteria{"photonTheta4",2.5,10.0,12.5,fltmax}),
+//                            } },
+//        {"_evtSel_gET1", {
+//                                make_pair(6,criteria{"photonE1",0.12,fltmax,fltmin,fltmin}),
+//                                make_pair(7,criteria{"photonE2",0.12,fltmax,fltmin,fltmin}),
+//                                make_pair(8,criteria{"photonE3",0.12,fltmax,fltmin,fltmin}),
+//                                make_pair(9,criteria{"photonE4",0.12,fltmax,fltmin,fltmin}),
+//                            } },
+//        {"_evtSel_gET2", {
+//                                make_pair(6,criteria{"photonE1",0.13,fltmax,fltmin,fltmin}),
+//                                make_pair(7,criteria{"photonE2",0.13,fltmax,fltmin,fltmin}),
+//                                make_pair(8,criteria{"photonE3",0.13,fltmax,fltmin,fltmin}),
+//                                make_pair(9,criteria{"photonE4",0.13,fltmax,fltmin,fltmin}),
+//                            } },
+//        {"_evtSel_pMomT1", {make_pair(10,criteria{"proton_momentum",0.35,fltmax,fltmin,fltmin})} },
+//        {"_evtSel_pMomT2", {make_pair(10,criteria{"proton_momentum",0.40,fltmax,fltmin,fltmin})} },
+//        {"_evtSel_pZL", {make_pair(11,criteria{"proton_z",50,80,fltmin,fltmin})} },
+//        {"_evtSel_pZT", {make_pair(11,criteria{"proton_z",54,76,fltmin,fltmin})} },
+//        {"_evtSel_mmsqT1", {make_pair(12,criteria{"mmsq",-0.025,0.025,fltmin,fltmin})} },
+//        {"_evtSel_mmsqT2", {make_pair(12,criteria{"mmsq",-0.020,0.020,fltmin,fltmin})} },
+//    };
 
     /////////////////////
     // EVENT SELECTION SCANS - MAINLY FOR CHISQ, UE, AND PROTON MOMENTUM WHICH WAS SHOWING LARGE BARLOWS
@@ -193,8 +193,8 @@ void fitAsymmetryPlots(){
     //   do not select on Mpi0
     //   Can check mass_plots_etaLeft_ASBS.pdf and mass_plots_etaRight_ASBS.pdf to see if the selection is working. It appears so
     /////////////////////
-//    vector<string> sbTags={"_etaLeft_ASBS"};  
-//    string weightVar="weightASBS";
+    vector<string> sbTags={"_etaLeft_ASBS"};  
+    string weightVar="weightASBS";
 
     /////////////////////
     // PHI OFFSET SYSTEMATIC 
@@ -221,6 +221,12 @@ void fitAsymmetryPlots(){
 //    vector<string> sbTags={"_sb_251520_252540_ASBS", "_sb_350540_351580_ASBS"}; 
 //    string weightVar="weightASBS"; // Will not overwrite AccWeight if "AccWeight" else overwrite weightVar with AccWeight*weightBS
 
+    map<string,vector<pair<int,criteria>>> eventSelectSingles;
+    int ikey=0;
+    for (auto it=eventSelects.begin(); it!=eventSelects.end(); ++it){
+        if (ikey==single)
+            eventSelectSingles[eventSelects.first] = eventSelects.second;
+    }
 
     /////////////////////
     // EXTRACT ASYMS IN A LOOP
@@ -229,7 +235,7 @@ void fitAsymmetryPlots(){
         vector<double> fluxRatios_90_0 = {  4.346818e+12/4.188001e+12*fluxNormScaleFactor, 0.965429*fluxNormScaleFactor, 0.918503*fluxNormScaleFactor }; 
         vector<double> fluxRatios_45_135 = {  4.076065e+12/4.095013e+12*fluxNormScaleFactor , 1.02261*fluxNormScaleFactor, 1.03254*fluxNormScaleFactor };
         constructFitArgs args = {weightVar, freePhase, fluxRatios_90_0, fluxRatios_45_135};
-        percentages = extractAsymmetries(sbTags[i],sbRegions[i],args,eventSelects);
+        percentages = extractAsymmetries(sbTags[i],sbRegions[i],args,eventSelectSingles);
     }
     if (showSummary){
         cout << endl;
@@ -1156,7 +1162,7 @@ map<string, float> extractAsymmetries(
                 // ******* Select Eta Right Half Peak
                 //selectEta=(Meta>eta_peak);
                 // ******* Select Eta Left Half Peak
-                //selectEta=(Meta<eta_peak);
+                selectEta=(Meta<eta_peak);
                 
                 // Do not select on Mpi0 nor Meta if we are going to do sideband subtraction also
                 selectPi0=true; 
